@@ -19,7 +19,7 @@
       </div>
       <div class="menu">
         <v-col class="d-flex droplist" cols="12" sm="6">
-          <v-select :items="languages" :value="languages[0]" color="#6377f7" dense :single-line="true" outlined>
+          <v-select :items="languages" v-model="language" color="#6377f7" dense :single-line="true" outlined>
           </v-select>
           <router-link to="/login" class="btn">
             <span class="btn login">Войти</span>
@@ -28,7 +28,6 @@
             <span class="btn reg">Регистрация</span>
           </router-link>
           <v-list>
-
             <v-menu transition="slide-y-transition" bottom>
               <template v-slot:activator="{ on, attrs }">
                 <v-app-bar-nav-icon color="primary" dark v-bind="attrs" v-on="on" class="menu__small" width="30"
@@ -54,8 +53,8 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import logo from '../assets/images/logo.png'
+import Vue from 'vue';
+import logo from '@/assets/images/logo.png';
 
 export default Vue.extend({
   name: 'AppHeader',
@@ -63,6 +62,7 @@ export default Vue.extend({
   data() {
     return {
       logo: logo,
+      language: 'RU',
       languages: [
         {
           text: "RU",
@@ -116,8 +116,7 @@ li {
 }
 
 .links__ul {
-  padding: 0;
-  padding-bottom: 7px;
+  padding: 0 0 7px 0;
 }
 
 .router:hover {
@@ -184,9 +183,8 @@ li {
 
 .btn {
   text-decoration: none;
-  padding: 0 10px;
   border-radius: 4px;
-  padding: 8px 0px 0px 10px;
+  padding: 8px 0 0 10px;
 
   .reg {
     background-color: #f1c613;
@@ -233,7 +231,7 @@ li {
 
   .menu__small {
     display: block;
-    margin: 0px 0px 20px 20px;
+    margin: 0 0 20px 20px;
   }
 
   .v-btn--icon.v-size--default .v-icon,
