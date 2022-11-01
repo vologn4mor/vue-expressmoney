@@ -145,7 +145,7 @@ li {
 }
 
 .content {
-  max-width: 1150px;
+  max-width: 1170px;
   width: 100%;
   margin: 0 auto;
   align-items: center;
