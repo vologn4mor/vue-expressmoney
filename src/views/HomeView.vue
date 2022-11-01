@@ -1,0 +1,20 @@
+<template>
+  <div>
+    <h1>Home View</h1>
+    <h1>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet magnam hic laudantium est consequatur, tempora adipisci modi voluptas, unde deleniti, voluptate cum sunt recusandae eos quisquam repellat quas error ipsa quasi non! Consequuntur nulla eveniet quidem asperiores sunt iste doloribus, adipisci optio commodi praesentium voluptatum, id earum in illum? Quaerat excepturi voluptatem atque vero optio et similique. Excepturi, perspiciatis quidem pariatur, consequuntur nihil dolorum nobis expedita sapiente aliquid quaerat suscipit rem minima cumque ex eius quo ad? Exercitationem labore odio vero molestias quibusdam asperiores, tempora minima, porro debitis omnis commodi magnam nihil ab corporis aperiam fugiat dolores magni soluta repellendus obcaecati id adipisci facilis voluptate harum. Ullam nostrum vitae deserunt. Minima, perspiciatis velit iusto ab aliquam saepe tempore doloremque officia quibusdam expedita illo aut dolores natus, neque explicabo esse! Doloribus, architecto quod. Consequuntur nostrum aperiam laborum numquam facere sit nemo quo ipsum beatae, a in voluptates ad voluptas distinctio similique necessitatibus? Ut consectetur suscipit accusamus dolore. Eligendi soluta accusamus dolore deserunt. Sit error aliquam cumque quam quasi fugit laborum, corporis rem consequuntur incidunt quia dolores aspernatur sapiente ipsum, voluptatibus magni debitis! Repellendus sapiente laudantium enim ullam asperiores deleniti magnam incidunt dicta quis saepe veritatis blanditiis sed mollitia, voluptate perferendis qui totam doloribus, velit eum ducimus, ratione debitis quidem cupiditate pariatur. A excepturi ut eaque dicta ratione illum alias quae laboriosam autem nesciunt vel neque voluptatum quod sed quaerat sunt fuga, illo delectus temporibus dignissimos cum minus porro similique. Blanditiis, accusantium reprehenderit excepturi molestiae nobis atque dicta reiciendis, quae nihil porro autem officiis fugit? Cupiditate hic illo quae repellat deleniti cum laboriosam repellendus obcaecati placeat totam vel accusamus eligendi reiciendis ea odit, id quos quaerat. Nesciunt, est porro. Iure molestias quaerat at harum reiciendis officiis illum aliquam animi? Exercitationem alias delectus provident animi fugiat esse voluptatem aperiam, atque voluptate quos ipsa maiores vitae cumque veniam id molestias quod beatae perferendis iste numquam officia! Tenetur iusto adipisci nobis autem quam, dolorum magni assumenda voluptates voluptatem quasi molestias quaerat reiciendis. Iste reprehenderit beatae, quaerat accusamus ipsa sequi magni nesciunt voluptates doloribus temporibus aliquam debitis repudiandae, magnam aut numquam corrupti voluptate iusto molestias eveniet commodi ex dolorem iure quod. Asperiores consequatur voluptates necessitatibus, voluptatem exercitationem officia sapiente nostrum voluptatibus numquam delectus inventore ipsam reiciendis rerum id nobis in? Velit at ducimus error quos delectus blanditiis, fugit saepe cupiditate iste! Reprehenderit, neque alias cumque inventore eveniet ad nesciunt reiciendis distinctio quae quaerat animi quod eum commodi soluta porro quos tenetur accusantium iusto blanditiis rerum rem magnam impedit! Facilis cum ratione consequatur praesentium incidunt corrupti voluptatibus obcaecati perspiciatis aliquam explicabo possimus odio repudiandae non provident officia accusantium recusandae eaque corporis dicta nemo, voluptatem neque. Reprehenderit qui maxime velit nobis eos facilis, corporis atque odio at fuga rem ipsum quis inventore voluptatem quibusdam eius repellendus sed veritatis aut ducimus voluptate consequuntur expedita quas! Dolores doloremque qui maxime explicabo aliquam deleniti consequatur quidem blanditiis nobis porro tempore possimus, unde beatae iure recusandae dignissimos cum ea nemo. Tenetur sit a quibusdam, laudantium nemo quaerat soluta commodi adipisci impedit culpa.
+    </h1>
+  </div>
+</template>
+
+<script lang="ts">
+import Vue from 'vue'
+
+export default Vue.extend({
+  name: 'Home',
+
+  components: {
+
+  }
+})
+</script>
