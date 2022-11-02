@@ -41,11 +41,12 @@ $bgColor: #f6f7fc;
 }
 
 .app {
-  padding-top: 90px;
+  padding-top: 130px;
 }
 
 .content {
-  max-width: 1150px;
+  max-width: 1170px;
+  padding: 0 10px 0 10px;
   width: 100%;
   margin: 0 auto;
 }
