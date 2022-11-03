@@ -6,5 +6,7 @@ export default interface ICoin {
   max: number,
   isFiat: boolean,
   course: number,
-  available: number
+  available: number,
+  code: string,
+  commission?:number
 }

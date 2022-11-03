@@ -21,21 +21,23 @@
         <div>
             <div class="exchange-card">
                 <strong>Ввод данных</strong>
-                <p><span class="bold">Курс обмена:</span> 63939.2917 UAH = 1 ETH <br>
-                    <span class="bold">Резерв:</span> 19.6103 ETH <a href="">Не хватает?</a>
+                <p><span class="bold">Курс обмена:</span> {{ formatCourse }}<br>
+                    <span class="bold">Резерв:</span> {{ pairCoins[0].available }} {{ pairCoins[0].code }} <a href="">Не
+                        хватает?</a>
                 </p>
                 <form>
                     <div>
                         <div class="your-coin">
-                            <img :src="Monobank" alt="your-coin" />
-                            <span class="bold">Монобанк</span>
+                            <img :src="pairCoins[0].imageUrl" alt="your-coin" />
+                            <span class="bold">{{ pairCoins[0].name }}</span>
                         </div>
-                        <p>min.: 2500 UAH max.: 29999 UAH</p>
+                        <p>min.: {{ pairCoins[0].min }} {{ pairCoins[0].code }} max.: {{ pairCoins[0].max }}
+                            {{ pairCoins[0].code }}</p>
                     </div>
                     <div class="input-container">
                         <label>
                             <small class="light-gray">Сумма<span class="danger">*</span>:</small><br>
-                            <input class="input-text" type="text" />
+                            <input class="input-text" type="text" v-model.number="mySum" @input="mySumChange()" />
                         </label>
                     </div>
                     <div class="input-container">
@@ -53,15 +55,17 @@
                     <div class="arrow-to-convert"><span>></span></div>
                     <div>
                         <div class="your-coin">
-                            <img :src="Bitcoin" alt="your-coin" />
-                            <span class="bold">BTC</span>
+                            <img :src="pairCoins[1].imageUrl" alt="your-coin" />
+                            <span class="bold">{{ pairCoins[1].name }}</span>
                         </div>
-                        <p>min.: 2500 UAH max.: 29999 UAH</p>
+                        <p>min.: {{ pairCoins[1].min }} {{ pairCoins[1].code }} max.: {{ pairCoins[1].max }}
+                            {{ pairCoins[1].code }}</p>
                     </div>
                     <div class="input-container">
                         <label>
                             <small class="light-gray">Сумма<span class="danger">*</span>:</small><br>
-                            <input class="input-text" type="text" />
+                            <input class="input-text" type="text" v-model.number="convertSum"
+                                @input="convertSumChange()" />
                         </label>
                     </div>
                     <div class="input-container">
@@ -99,21 +103,96 @@
 <script lang="ts">
 import Vue from "vue";
 import liarr from "@/assets/images/liarr.png"
+import ICoin from "@/interfaces/ICoin";
+
 export default Vue.extend({
-    data() {
-        return {
-            liarr
+    props: {
+        pairCoins: {
+            type: Array as () => Array<ICoin>,
+            required: true
         }
     },
-    props: {
-        Bitcoin: {
-            type: String,
-            required: true,
-        },
-        Monobank: {
-            type: String,
-            required: true,
+    data() {
+        return {
+            liarr,
+            mySum: 0,
+            convertSum: 0,
+            // blockedWatchMySum: true,
+            // blockedWatchConvertSum: true,
+            blockedWatch: false,
         }
+    },
+    methods: {
+        getBeautifulNumber(n: number, isFiat: boolean): number {
+            let counter = 0;
+            let course: number = isFiat ? this.pairCoins[1].course : this.pairCoins[0].course
+            n = isFiat ? this.mySum / course : this.mySum * course;
+            let result: Number = n;
+            if (n > 1) { // убираем числа после запятой 
+                counter++
+            }
+            while (n < 1) {
+                n *= 10
+                counter++;
+            }
+            counter += 3
+            return parseFloat(result.toFixed(counter))
+        },
+        convertSumChange() {
+            if (this.convertSum > 0) {
+                // this.mySum = this.getBeautifulNumber(this.convertSum, this.pairCoins[1].isFiat);
+                this.mySum = this.convertSum * this.pairCoins[1].course;
+            }
+        },
+        mySumChange() {
+            if (this.mySum > 0) {
+                // this.convertSum = this.getBeautifulNumber(this.mySum, this.pairCoins[0].isFiat);
+                this.convertSum = this.mySum / this.pairCoins[1].course;
+            }
+        }
+    },
+    computed: {
+        formatCourse(): String {
+            if (this.pairCoins[0].isFiat) {
+                return `${this.pairCoins[1].course} ${this.pairCoins[0].code} = 1 ${this.pairCoins[1].code}`
+            } else {
+                return `1 ${this.pairCoins[0].code} = ${this.pairCoins[0].course} ${this.pairCoins[1].code}`
+            }
+        },
+
+    },
+    updated() {
+        // if (this.mySum > 0 && this.convertSum > 0) {
+        //     this.convertSum = this.getBeautifulNumber(this.mySum);
+        //     this.mySum = this.getBeautifulNumber(this.convertSum);
+        // }
+    },
+    watch: {
+        // mySum: function () {
+        //     // this.blockedWatchConvertSum = true;
+        //     if (this.blockedWatch) {
+        //         return;
+        //     }
+        //     this.blockedWatch = true;
+        //     if (this.mySum > 0) {
+        //         this.convertSum = this.getBeautifulNumber(this.mySum);
+        //     }
+        //     // this.blockedWatchConvertSum = false;
+        //     this.blockedWatch = false;
+        // },
+        // convertSum: function () {
+        //     // this.blockedWatchMySum = true;
+
+        //     if (this.blockedWatch) {
+        //         return;
+        //     }
+        //     this.blockedWatch = true;
+        //     if (this.convertSum > 0) {
+        //         this.mySum = this.getBeautifulNumber(this.convertSum);
+        //     }
+        //     this.blockedWatch = false;
+        //     // this.blockedWatchMySum = false;
+        // }
     }
 })
 </script>

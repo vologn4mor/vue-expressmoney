@@ -30,7 +30,7 @@
           </li>
         </ul>
       </div>
-      <AppFiatToCrypto :Bitcoin="Bitcoin" :Monobank="Monobank" />
+      <AppFiatToCrypto :pairCoins="pairCoins" />
     </div>
     <div>
     </div>
@@ -57,16 +57,19 @@ var fakeCoins: ICoin[] = [{
   max: 29000,
   isFiat: true,
   course: 1,
-  available: 300123
+  available: 300123,
+  code: "UAH"
 }, {
   id: 2,
   name: 'BTC',
   imageUrl: Bitcoin,
-  min: 5000,
-  max: 29999,
+  min: 0.003,
+  max: 0.024,
   isFiat: false,
-  course: 5234523.4231,
-  available: 5.12343
+  course: 820959.1751,
+  available: 5.12343,
+  code: "BTC",
+  commission: 0.0001
 }, {
   id: 3,
   name: "Ether",
@@ -75,7 +78,8 @@ var fakeCoins: ICoin[] = [{
   max: 25000,
   isFiat: false,
   course: 12352,
-  available: 78.123
+  available: 78.123,
+  code: "ETH"
 }, {
   id: 4,
   name: "Oschadbank",
@@ -84,7 +88,8 @@ var fakeCoins: ICoin[] = [{
   max: 30000,
   isFiat: true,
   course: 1,
-  available: 145000
+  available: 145000,
+  code: "UAH"
 }]
 
 export default Vue.extend({
@@ -113,14 +118,18 @@ export default Vue.extend({
           this.convertCoin = {} as ICoin;
           this.myCoin = coin;
         }
-      })
+      });
+
     },
     selectAvailableCoin(id: Number) {
+      this.pairCoins = [];
       this.fakeConvertCoins.map((coin) => {
         if (coin.id == id) {
           this.convertCoin = coin;
+
         }
-      })
+      });
+      this.pairCoins.push(this.myCoin, this.convertCoin);
     },
     refreshConvertList(): void {
       this.fakeCoins.map(coin => {
@@ -130,7 +139,7 @@ export default Vue.extend({
       });
     }
   },
-  mounted() {  // установка при открытии сайта значений по дефолту
+  beforeMount() {  // установка при открытии сайта значений по дефолту
     this.fakeCoins.map(coin => {
       if (coin.name == "Monobank") {
         this.myCoin = coin;
@@ -146,6 +155,7 @@ export default Vue.extend({
         this.convertCoin = coin;
       }
     });
+    this.pairCoins.push(this.myCoin, this.convertCoin);
   },
   components: {
     AppCoinYourItem,
