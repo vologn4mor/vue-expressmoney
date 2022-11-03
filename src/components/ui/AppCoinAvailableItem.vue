@@ -1,12 +1,12 @@
 <template>
-    <div class="coin" @click="$emit('action', id)">
+    <div class="coin" @click="$emit('action', id)" :class="selectedCoin ? 'selected' : null">
         <div class="coin__block">
             <img :src="imageUrl" :alt="name" class="coin__img">
             <p>{{ name }}</p>
         </div>
         <div class="coin__info">
             <p v-if="isSelectedCourse ? course : reserve">
-                {{ isSelectedCourse ? "1 → " + course : reserve }}
+                {{ isSelectedCourse ? formatCourse : reserve }}
             </p>
         </div>
     </div>
@@ -45,6 +45,23 @@ export default Vue.extend({
         isSelectedCourse: {
             type: Boolean,
             required: true
+        },
+        selectedCoin: {
+            type: Boolean,
+            required: true
+        },
+        isFiat: {
+            type: Boolean,
+            required: true,
+        }
+    },
+    computed: {
+        formatCourse(): String {
+            if (this.isFiat) {
+                return "1 - " + this.course
+            } else {
+                return this.course + " - 1"
+            }
         }
     }
 })
@@ -67,10 +84,15 @@ p {
     align-items: center;
     justify-content: space-between;
     border-radius: 4px;
+    margin-bottom: 2px;
 }
 
 .coin:hover {
     cursor: pointer;
+    background-color: #e7ebfd;
+}
+
+.selected {
     background-color: #e7ebfd;
 }
 

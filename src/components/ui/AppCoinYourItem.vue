@@ -1,5 +1,5 @@
 <template>
-    <div class="coin" @click="$emit('action', id)">
+    <div class="coin" @click="$emit('action', id)" :class="selectedCoin ? 'selected' : null">
         <div class="coin__block">
             <img :src="imageUrl" :alt="name" class="coin__img">
             <p>{{ name }}</p>
@@ -33,6 +33,10 @@ export default Vue.extend({
             type: String,
             required: true
         },
+        selectedCoin: {
+            type: Boolean,
+            required: true
+        }
     }
 })
 </script>
@@ -54,6 +58,11 @@ p {
     align-items: center;
     justify-content: space-between;
     border-radius: 4px;
+    margin-bottom: 2px;
+}
+
+.selected {
+    background-color: #e7ebfd;
 }
 
 .coin:hover {
