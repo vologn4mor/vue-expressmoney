@@ -1,6 +1,6 @@
 <template>
     <div class="template">
-        <div class="content ">
+        <div class="content">
             <div class="second-block">
                 <div class="welcome">
                     <h2 class="block-main-text">Приветствуем на сайте обменного пункта!</h2>
@@ -37,9 +37,57 @@
                                 <span class="review-text">{{ review.text }}</span>
                             </div>
                         </div>
+
                     </div>
                     <div class="container-all-reviews">
                         <router-link to="/reviews" class="third-block-btn">Все отзывы</router-link>
+                    </div>
+                </div>
+                <div class="reserve-block">
+                    <h2 class="block-main-text">Резерв валюты</h2>
+                    <div class="reserve-container" :style="{ maxHeight: hideReserve ? '' : 'max-content' }">
+                        <div class="reserve-coin-card" v-for="coin in fakeCoins" :key="Math.random()">
+                            <div class="reserve-coin-image">
+                                <img :src="coin.imageUrl" alt="">
+                            </div>
+                            <div class="reserve-coin-data">
+                                <p>{{ coin.name }}</p>
+                                <p>{{ coin.available }}</p>
+                            </div>
+                        </div>
+                        <div class="reserve-coin-card" v-for="coin in fakeCoins" :key="Math.random()">
+                            <div class="reserve-coin-image">
+                                <img :src="coin.imageUrl" alt="">
+                            </div>
+                            <div class="reserve-coin-data">
+                                <p>{{ coin.name }}</p>
+                                <p>{{ coin.available }}</p>
+                            </div>
+                        </div>
+                        <div class="reserve-coin-card" v-for="coin in fakeCoins" :key="Math.random()">
+                            <div class="reserve-coin-image">
+                                <img :src="coin.imageUrl" alt="">
+                            </div>
+                            <div class="reserve-coin-data">
+                                <p>{{ coin.name }}</p>
+                                <p>{{ coin.available }}</p>
+                            </div>
+                        </div>
+                        <div class="reserve-coin-card" v-for="coin in fakeCoins" :key="Math.random()">
+                            <div class="reserve-coin-image">
+                                <img :src="coin.imageUrl" alt="">
+                            </div>
+                            <div class="reserve-coin-data">
+                                <p>{{ coin.name }}</p>
+                                <p>{{ coin.available }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="reserve-btn-container">
+                        <div class="third-block-btn" @click="hideReserve = !hideReserve">{{ hideReserve ? "Показать все"
+                                :
+                                "Скрыть"
+                        }}</div>
                     </div>
                 </div>
             </div>
@@ -49,19 +97,24 @@
 
 <script lang="ts">
 import IReview from "@/interfaces/IReview";
+import ICoin from "@/interfaces/ICoin";
 import Vue from "vue";
 
 export default Vue.extend({
     data() {
         return {
-
+            hideReserve: true
         }
     },
     props: {
         lastReviews: {
             type: Array as () => Array<IReview>,
             required: true
-        }
+        },
+        fakeCoins: {
+            type: Array as () => Array<ICoin>,
+            required: true
+        },
     }
 });
 </script>
@@ -126,6 +179,43 @@ export default Vue.extend({
 
 .third-block-btn:hover {
     background-color: #6377f7;
-    color: #fff
+    color: #fff;
+    cursor: pointer;
+}
+
+.reserve-coin-image img {
+    width: 50px;
+}
+
+.reserve-coin-card {
+    display: flex;
+    width: 23%;
+    background-color: white;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+.reserve-coin-card p {
+    margin: 0;
+}
+
+.reserve-coin-data {
+    margin-left: 10px;
+}
+
+.reserve-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.reserve-container {
+    max-height: 220px;
+    overflow: hidden;
+}
+
+.reserve-btn-container {
+    display: flex;
+    justify-content: center;
 }
 </style>

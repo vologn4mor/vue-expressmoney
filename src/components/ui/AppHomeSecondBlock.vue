@@ -95,6 +95,4 @@ export default Vue.extend({
     max-width: 180px;
     width: 100%;
 }
-
-.image-div {}
 </style>

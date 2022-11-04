@@ -40,7 +40,9 @@
       </div>
     </div>
     <AppHomeSecondBlock />
-    <AppHomeThirdBlock :lastReviews="threeLastFakeReviews" />
+    <AppHomeThirdBlock :lastReviews="threeLastFakeReviews" :fakeCoins="fakeCoins" />
+    <AppHomeFourthBlock />
+    <AppHomeFivethBlock />
   </div>
 
 </template>
@@ -53,6 +55,8 @@ import AppCoinAvailableItem from "@/components/ui/AppCoinAvailableItem.vue"
 import AppFiatToCrypto from "@/components/AppFiatToCrypto.vue"
 import AppHomeSecondBlock from "@/components/ui/AppHomeSecondBlock.vue"
 import AppHomeThirdBlock from "@/components/ui/AppHomeThirdBlock.vue"
+import AppHomeFourthBlock from "@/components/ui/AppHomeFourthBlock.vue"
+import AppHomeFivethBlock from "@/components/ui/AppHomeFivethBlock.vue"
 
 import liarr from "@/assets/images/liarr.png"
 import Bitcoin from "@/assets/images/coins/Bitcoin.png"
@@ -147,7 +151,7 @@ export default Vue.extend({
       liarr,
       Monobank,
       Bitcoin,
-      threeLastFakeReviews
+      threeLastFakeReviews,
     }
   },
   methods: {
@@ -205,7 +209,9 @@ export default Vue.extend({
     AppCoinAvailableItem,
     AppFiatToCrypto,
     AppHomeSecondBlock,
-    AppHomeThirdBlock
+    AppHomeThirdBlock,
+    AppHomeFourthBlock,
+    AppHomeFivethBlock
   }
 })
 </script>
