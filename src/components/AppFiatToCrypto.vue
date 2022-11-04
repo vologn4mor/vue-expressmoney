@@ -3,7 +3,7 @@
         <div class="alert-with-convert">
             <div class="alert">
                 <strong class="alert-strong">Внимание!</strong>
-                <ul class="alert-ul">
+                <ul class="alert-ul" v-if="pairCoins[0].isFiat">
                     <li class="alert-li danger" :style="{ listStyleImage: 'url(' + liarr + ')' }">Требуется
                         обязательная верификация
                         счета, для осуществления данной операции.</li>
@@ -14,6 +14,28 @@
                     <li class="alert-li" :style="{ listStyleImage: 'url(' + liarr + ')' }">Как только Ваша оплата будет
                         получена
                         мы произведем перевод средств на указанные в заявке реквизиты.
+                    </li>
+                </ul>
+                <ul class="alert-ul" v-else>
+                    <li class="alert-li" :style="{ listStyleImage: 'url(' + liarr + ')' }">
+                        Данная операция производится круглосуточно в автоматическом режиме и занимает от 5 до 60 минут
+                    </li>
+                    <li class="alert-li" :style="{ listStyleImage: 'url(' + liarr + ')' }">
+                        Оплата заявки происходит после зачисления средств на наш счет биржи Binance. Зачисление
+                        происходит при достижении
+                        транзакцией необходимого количества подтверждений сети. Количество подтверждений варьируется в
+                        зависимости от
+                        используемой валюты.
+                    </li>
+                    <li class="alert-li" :style="{ listStyleImage: 'url(' + liarr + ')' }">
+                        Как правило, средства поступают в течение 2-15 минут после оплаты.
+                    </li>
+                    <li class="alert-li" :style="{ listStyleImage: 'url(' + liarr + ')' }">
+                        В редких случаях зачисление банковского перевода может проходить до 24 часов с момента
+                        произведения оплаты.
+                    </li>
+                    <li class="alert-li" :style="{ listStyleImage: 'url(' + liarr + ')' }">
+                        Курс фиксируется по бирже <span class="bold">Binance</span>.
                     </li>
                 </ul>
             </div>
@@ -215,6 +237,10 @@ export default Vue.extend({
 <style lang="scss">
 .bold {
     font-weight: bold;
+}
+
+.flex {
+    display: flex;
 }
 
 .input-text {

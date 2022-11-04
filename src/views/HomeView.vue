@@ -1,52 +1,63 @@
 <template>
-  <div class="home-block">
-    <div class="exchange-block">
-      <div class="exchange-block__your-coins">
-        <strong class="yours-coins__strong">Вы отдаете</strong>
-        <ul>
-          <li v-for="item in fakeCoins" :key="item.id">
-            <AppCoinYourItem :id="item.id" :name="item.name" :imageUrl="item.imageUrl"
-              :selectedCoin="myCoin.id == item.id ? true : false" @action="selectYourCoin" />
-          </li>
-        </ul>
-      </div>
-      <div class="exchange-block__available-coins">
-        <div class="flex available-coins__container">
-          <strong class="available-coins__strong">Вы получаете</strong>
-          <div class="flex available-coins__buttons">
-            <div class="available-coins__button" :class="isSelectedCourse ? 'available-coins__active' : ''"
-              @click="isSelectedCourse = true">курс</div>
-            &nbsp;
-            <div class="available-coins__button" :class="!isSelectedCourse ? 'available-coins__active' : ''"
-              @click="isSelectedCourse = false">резерв</div>
+  <div>
+    <div class="template">
+      <div class="home-block content">
+        <div class="exchange-block">
+          <div class="exchange-block__your-coins" :style="{ height: 70 + 60 * fakeCoins.length + 'px' }">
+            <strong class="yours-coins__strong">Вы отдаете</strong>
+            <ul>
+              <li v-for="item in fakeCoins" :key="item.id">
+                <AppCoinYourItem :id="item.id" :name="item.name" :imageUrl="item.imageUrl"
+                  :selectedCoin="myCoin.id == item.id ? true : false" @action="selectYourCoin" />
+              </li>
+            </ul>
           </div>
+          <div class="exchange-block__available-coins" :style="{ height: 70 + 60 * fakeConvertCoins.length + 'px' }">
+            <div class="flex available-coins__container">
+              <strong class="available-coins__strong">Вы получаете</strong>
+              <div class="flex available-coins__buttons">
+                <div class="available-coins__button" :class="isSelectedCourse ? 'available-coins__active' : ''"
+                  @click="isSelectedCourse = true">курс</div>
+                &nbsp;
+                <div class="available-coins__button" :class="!isSelectedCourse ? 'available-coins__active' : ''"
+                  @click="isSelectedCourse = false">резерв</div>
+              </div>
+            </div>
+            <ul>
+              <li v-for="item in fakeConvertCoins" :key="item.id">
+                <AppCoinAvailableItem :id="item.id" :name="item.name" :imageUrl="item.imageUrl"
+                  :course="myCoin.isFiat ? item.course : myCoin.course" :reserve="item.available"
+                  :isSelectedCourse="isSelectedCourse" :isFiat="item.isFiat"
+                  :selectedCoin="convertCoin.id == item.id ? true : false" @action="selectAvailableCoin" />
+              </li>
+            </ul>
+          </div>
+          <AppFiatToCrypto :pairCoins="pairCoins" />
         </div>
-        <ul>
-          <li v-for="item in fakeConvertCoins" :key="item.id">
-            <AppCoinAvailableItem :id="item.id" :name="item.name" :imageUrl="item.imageUrl"
-              :course="myCoin.isFiat ? item.course : myCoin.course" :reserve="item.available"
-              :isSelectedCourse="isSelectedCourse" :isFiat="item.isFiat"
-              :selectedCoin="convertCoin.id == item.id ? true : false" @action="selectAvailableCoin" />
-          </li>
-        </ul>
+        <div>
+        </div>
+
       </div>
-      <AppFiatToCrypto :pairCoins="pairCoins" />
     </div>
-    <div>
-    </div>
+    <AppHomeSecondBlock />
   </div>
+
 </template>
 
 <script lang="ts">
 import Vue from "vue"
+
 import AppCoinYourItem from "@/components/ui/AppCoinYourItem.vue"
 import AppCoinAvailableItem from "@/components/ui/AppCoinAvailableItem.vue"
 import AppFiatToCrypto from "@/components/AppFiatToCrypto.vue"
+import AppHomeSecondBlock from "@/components/ui/AppHomeSecondBlock.vue"
+
 import liarr from "@/assets/images/liarr.png"
 import Bitcoin from "@/assets/images/coins/Bitcoin.png"
 import Monobank from "@/assets/images/coins/Monobank.png"
 import Ether from "@/assets/images/coins/Ether.png"
 import Oschadbank from "@/assets/images/coins/Oschadbank.png"
+import Tron from "@/assets/images/coins/tron.png"
 import ICoin from "@/interfaces/ICoin"
 
 var fakeCoins: ICoin[] = [{
@@ -90,6 +101,16 @@ var fakeCoins: ICoin[] = [{
   course: 1,
   available: 145000,
   code: "UAH"
+}, {
+  id: 5,
+  name: "Tron",
+  imageUrl: Tron,
+  min: 0.6,
+  max: 5.6,
+  isFiat: false,
+  course: 190.901,
+  available: 800,
+  code: "TRON"
 }]
 
 export default Vue.extend({
@@ -160,7 +181,8 @@ export default Vue.extend({
   components: {
     AppCoinYourItem,
     AppCoinAvailableItem,
-    AppFiatToCrypto
+    AppFiatToCrypto,
+    AppHomeSecondBlock
   }
 })
 </script>

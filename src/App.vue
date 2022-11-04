@@ -2,9 +2,7 @@
   <v-app>
     <AppHeader />
     <div class="app">
-      <div class="content">
-        <router-view />
-      </div>
+      <router-view />
     </div>
     <AppFooter />
   </v-app>
@@ -44,10 +42,21 @@ $bgColor: #f6f7fc;
   padding-top: 130px;
 }
 
+.template {
+  background-color: #f6f7fc;
+}
+
 .content {
   max-width: 1170px;
   padding: 0 10px 0 10px;
   width: 100%;
   margin: 0 auto;
 }
+
+// .content {
+//   max-width: 1170px;
+//   padding: 0 10px 0 10px;
+//   width: 100%;
+//   margin: 0 auto;
+// }
 </style>
