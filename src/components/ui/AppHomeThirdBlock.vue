@@ -1,0 +1,131 @@
+<template>
+    <div class="template">
+        <div class="content ">
+            <div class="second-block">
+                <div class="welcome">
+                    <h2 class="block-main-text">Приветствуем на сайте обменного пункта!</h2>
+                    <p>Наш On-line сервис предназначен для тех, кто хочет быстро, безопасно и по выгодному курсу
+                        обменять такие виды
+                        электронных валют: Webmoney, Perfect Money, Qiwi, PayPal, Яндекс. Деньги, Альфа-Банк, ВТБ 24,
+                        Приват24, Visa/Master
+                        Card, Western uniоn, MoneyGram.</p>
+
+                    <p>Этим возможности нашего сервиса не ограничиваются. В рамках проекта действуют программа
+                        лояльности, накопительная скидка
+                        и партнерская программа, воспользовавшись преимуществами которых, вы сможете совершать обмен
+                        электронных валют на более
+                        выгодных условиях. Для этого нужно просто зарегистрироваться на сайте.</p>
+
+                    <p>Наш пункт обмена электронных валют – система, созданная на базе современного программного
+                        обеспечения и содержащая весь
+                        набор необходимых функций для удобной и безопасной конвертации наиболее распространенных видов
+                        электронных денег. За
+                        время работы мы приобрели репутацию проверенного партнера и делаем все возможное, чтобы ваши
+                        впечатления от нашего
+                        сервиса были только благоприятными</p>
+                </div>
+                <div class="reviews-block">
+                    <h2 class="block-main-text">Отзывы</h2>
+                    <div class="reviews-container">
+                        <div v-for="review in lastReviews" :key="review.id">
+                            <div class="review-item__triangle"></div>
+                            <div class="review-item">
+                                <div class="review-item__name-and-date">
+                                    <p class="review-name">{{ review.name }}</p>
+                                    <p class="review-date">{{ review.date }}</p>
+                                </div>
+                                <span class="review-text">{{ review.text }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-all-reviews">
+                        <router-link to="/reviews" class="third-block-btn">Все отзывы</router-link>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script lang="ts">
+import IReview from "@/interfaces/IReview";
+import Vue from "vue";
+
+export default Vue.extend({
+    data() {
+        return {
+
+        }
+    },
+    props: {
+        lastReviews: {
+            type: Array as () => Array<IReview>,
+            required: true
+        }
+    }
+});
+</script>
+
+<style scoped lang="scss">
+.reviews-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.review-item {
+    width: 368px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 4px;
+}
+
+.review-item__name-and-date {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2px;
+}
+
+.review-item__triangle {
+    border: 20px solid transparent;
+    border-bottom: 0px solid #fff;
+    border-left: 40px solid #fff;
+    width: 0;
+    position: relative;
+    margin-left: 20px;
+    top: 8px;
+}
+
+.block-main-text {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.review-date {
+    font-size: 12px;
+    color: lightgray;
+}
+
+.review-name,
+.review-text {
+    font-size: 14px;
+}
+
+.third-block-btn {
+    border: 1px solid #6377f7;
+    border-radius: 5px;
+    padding: 10px;
+    color: #000;
+    text-decoration: none;
+}
+
+.container-all-reviews {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.third-block-btn:hover {
+    background-color: #6377f7;
+    color: #fff
+}
+</style>

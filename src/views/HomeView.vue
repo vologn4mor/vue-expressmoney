@@ -40,6 +40,7 @@
       </div>
     </div>
     <AppHomeSecondBlock />
+    <AppHomeThirdBlock :lastReviews="threeLastFakeReviews" />
   </div>
 
 </template>
@@ -51,6 +52,7 @@ import AppCoinYourItem from "@/components/ui/AppCoinYourItem.vue"
 import AppCoinAvailableItem from "@/components/ui/AppCoinAvailableItem.vue"
 import AppFiatToCrypto from "@/components/AppFiatToCrypto.vue"
 import AppHomeSecondBlock from "@/components/ui/AppHomeSecondBlock.vue"
+import AppHomeThirdBlock from "@/components/ui/AppHomeThirdBlock.vue"
 
 import liarr from "@/assets/images/liarr.png"
 import Bitcoin from "@/assets/images/coins/Bitcoin.png"
@@ -58,7 +60,9 @@ import Monobank from "@/assets/images/coins/Monobank.png"
 import Ether from "@/assets/images/coins/Ether.png"
 import Oschadbank from "@/assets/images/coins/Oschadbank.png"
 import Tron from "@/assets/images/coins/tron.png"
+
 import ICoin from "@/interfaces/ICoin"
+import IReview from "@/interfaces/IReview"
 
 var fakeCoins: ICoin[] = [{
   id: 1,
@@ -113,6 +117,23 @@ var fakeCoins: ICoin[] = [{
   code: "TRON"
 }]
 
+var threeLastFakeReviews: IReview[] = [{
+  id: 1,
+  name: "Владимир",
+  date: "27.08.2022, 19:46",
+  text: "Все супер - рекомендую"
+}, {
+  id: 2,
+  name: "Николай",
+  date: "27.09.2020, 18:46",
+  text: "Поменял все без проблем"
+}, {
+  id: 3,
+  name: "Александр",
+  date: "27.10.2020, 19:48",
+  text: "Все сделали достаточно быстро"
+}]
+
 export default Vue.extend({
   name: 'Home',
   data() {
@@ -125,7 +146,8 @@ export default Vue.extend({
       fakeConvertCoins: [] as ICoin[],
       liarr,
       Monobank,
-      Bitcoin
+      Bitcoin,
+      threeLastFakeReviews
     }
   },
   methods: {
@@ -182,7 +204,8 @@ export default Vue.extend({
     AppCoinYourItem,
     AppCoinAvailableItem,
     AppFiatToCrypto,
-    AppHomeSecondBlock
+    AppHomeSecondBlock,
+    AppHomeThirdBlock
   }
 })
 </script>
