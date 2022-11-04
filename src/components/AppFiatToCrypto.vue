@@ -123,10 +123,8 @@ export default Vue.extend({
         }
     },
     methods: {
-        getBeautifulNumber(n: number, isFiat: boolean): number {
+        getBeautifulNumber(n: number): number {
             let counter = 0;
-            let course: number = isFiat ? this.pairCoins[1].course : this.pairCoins[0].course
-            n = isFiat ? this.mySum / course : this.mySum * course;
             let result: Number = n;
             if (n > 1) { // убираем числа после запятой 
                 counter++
@@ -140,14 +138,21 @@ export default Vue.extend({
         },
         convertSumChange() {
             if (this.convertSum > 0) {
-                // this.mySum = this.getBeautifulNumber(this.convertSum, this.pairCoins[1].isFiat);
-                this.mySum = this.convertSum * this.pairCoins[1].course;
+                if (this.pairCoins[0].isFiat) {
+                    this.mySum = this.getBeautifulNumber(this.convertSum * this.pairCoins[1].course);
+                } else {
+                    this.mySum = this.getBeautifulNumber(this.convertSum * this.pairCoins[0].course);
+                }
             }
         },
         mySumChange() {
             if (this.mySum > 0) {
-                // this.convertSum = this.getBeautifulNumber(this.mySum, this.pairCoins[0].isFiat);
                 this.convertSum = this.mySum / this.pairCoins[1].course;
+                if (this.pairCoins[0].isFiat) {
+                    this.convertSum = this.getBeautifulNumber(this.mySum / this.pairCoins[1].course);
+                } else {
+                    this.convertSum = this.getBeautifulNumber(this.mySum / this.pairCoins[0].course);
+                }
             }
         }
     },
@@ -168,6 +173,16 @@ export default Vue.extend({
         // }
     },
     watch: {
+        pairCoins: function (newVal: Array<ICoin>, oldVal: Array<ICoin>) {
+            if (oldVal[0].id != newVal[0].id) {
+                this.mySum = 0;
+                this.convertSum = 0;
+                return;
+            }
+            if (oldVal[1].id != newVal[1].id) {
+                this.mySumChange();
+            }
+        }
         // mySum: function () {
         //     // this.blockedWatchConvertSum = true;
         //     if (this.blockedWatch) {
