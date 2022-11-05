@@ -255,4 +255,10 @@ li {
     max-width: 77px;
   }
 }
+
+@media(max-width: 599px) {
+  .menu {
+    max-width: 140px;
+  }
+}
 </style>

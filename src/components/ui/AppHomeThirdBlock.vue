@@ -37,7 +37,6 @@
                                 <span class="review-text">{{ review.text }}</span>
                             </div>
                         </div>
-
                     </div>
                     <div class="container-all-reviews">
                         <router-link to="/reviews" class="third-block-btn">Все отзывы</router-link>
