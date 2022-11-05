@@ -27,7 +27,7 @@
                 <div class="reviews-block">
                     <h2 class="block-main-text">Отзывы</h2>
                     <div class="reviews-container">
-                        <div v-for="review in lastReviews" :key="review.id">
+                        <div v-for="review in lastReviews" :key="review.id" class="review-container">
                             <div class="review-item__triangle"></div>
                             <div class="review-item">
                                 <div class="review-item__name-and-date">
@@ -125,8 +125,14 @@ export default Vue.extend({
     justify-content: space-between;
 }
 
+.review-container {
+    margin: 0 20px;
+    max-width: 328px;
+    width: 100%;
+}
+
 .review-item {
-    width: 368px;
+    // width: 368px;
     padding: 20px;
     background-color: #fff;
     border-radius: 4px;
@@ -217,5 +223,49 @@ export default Vue.extend({
 .reserve-btn-container {
     display: flex;
     justify-content: center;
+}
+
+@media(max-width: 1020px) {
+    .reserve-coin-card {
+        width: 45%;
+    }
+
+    .reserve-container {
+        max-height: 430px;
+        display: flex;
+        justify-content: center;
+    }
+}
+
+@media(max-width: 910px) {
+    .review-item__name-and-date {
+        flex-direction: column;
+    }
+
+    .review-name,
+    .review-text {
+        margin: 0;
+    }
+}
+
+@media(max-width: 600px) {
+    .reviews-container {
+        flex-direction: column;
+    }
+
+    .review-container {
+        max-width: none;
+        width: auto;
+    }
+}
+
+@media(max-width: 500px) {
+    .reserve-coin-card {
+        width: 90%;
+    }
+
+    .reserve-container[data-v-691025db] {
+        max-height: 855px;
+    }
 }
 </style>

@@ -95,4 +95,23 @@ export default Vue.extend({
     max-width: 180px;
     width: 100%;
 }
+
+@media(max-width: 960px) {
+    small {
+        line-height: 14px;
+    }
+
+    .second-block {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+
+
+}
 </style>

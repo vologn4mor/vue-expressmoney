@@ -53,6 +53,12 @@ $bgColor: #f6f7fc;
   margin: 0 auto;
 }
 
+@media (max-width: 960px) {
+  .app {
+    padding-top: 90px;
+  }
+}
+
 // .content {
 //   max-width: 1170px;
 //   padding: 0 10px 0 10px;

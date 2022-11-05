@@ -104,4 +104,27 @@ p {
 .coin__info {
     margin-right: 5px;
 }
+
+@media (max-width: 700px) {
+    .coin__info {
+        display: none;
+    }
+
+}
+
+@media (max-width: 560px) {
+    .coin__info {
+        display: none;
+    }
+
+    .coin__block {
+        flex-direction: column;
+        margin: 0 auto;
+    }
+
+    .coin__block p {
+        padding-left: 0;
+    }
+
+}
 </style>

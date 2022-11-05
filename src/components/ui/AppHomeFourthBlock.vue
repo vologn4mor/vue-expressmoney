@@ -99,4 +99,10 @@ export default Vue.extend({
 .card p {
     font-size: 14px;
 }
+
+@media(max-width: 755px) {
+    .cards-container {
+        justify-content: center;
+    }
+}
 </style>

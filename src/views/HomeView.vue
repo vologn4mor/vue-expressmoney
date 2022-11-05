@@ -3,34 +3,36 @@
     <div class="template">
       <div class="home-block content">
         <div class="exchange-block">
-          <div class="exchange-block__your-coins" :style="{ height: 70 + 60 * fakeCoins.length + 'px' }">
-            <strong class="yours-coins__strong">Вы отдаете</strong>
-            <ul>
-              <li v-for="item in fakeCoins" :key="item.id">
-                <AppCoinYourItem :id="item.id" :name="item.name" :imageUrl="item.imageUrl"
-                  :selectedCoin="myCoin.id == item.id ? true : false" @action="selectYourCoin" />
-              </li>
-            </ul>
-          </div>
-          <div class="exchange-block__available-coins" :style="{ height: 70 + 60 * fakeConvertCoins.length + 'px' }">
-            <div class="flex available-coins__container">
-              <strong class="available-coins__strong">Вы получаете</strong>
-              <div class="flex available-coins__buttons">
-                <div class="available-coins__button" :class="isSelectedCourse ? 'available-coins__active' : ''"
-                  @click="isSelectedCourse = true">курс</div>
-                &nbsp;
-                <div class="available-coins__button" :class="!isSelectedCourse ? 'available-coins__active' : ''"
-                  @click="isSelectedCourse = false">резерв</div>
-              </div>
+          <div class="exchange-block__all-coins">
+            <div class="exchange-block__your-coins">
+              <strong class="yours-coins__strong">Вы отдаете</strong>
+              <ul>
+                <li v-for="item in fakeCoins" :key="item.id">
+                  <AppCoinYourItem :id="item.id" :name="item.name" :imageUrl="item.imageUrl"
+                    :selectedCoin="myCoin.id == item.id ? true : false" @action="selectYourCoin" />
+                </li>
+              </ul>
             </div>
-            <ul>
-              <li v-for="item in fakeConvertCoins" :key="item.id">
-                <AppCoinAvailableItem :id="item.id" :name="item.name" :imageUrl="item.imageUrl"
-                  :course="myCoin.isFiat ? item.course : myCoin.course" :reserve="item.available"
-                  :isSelectedCourse="isSelectedCourse" :isFiat="item.isFiat"
-                  :selectedCoin="convertCoin.id == item.id ? true : false" @action="selectAvailableCoin" />
-              </li>
-            </ul>
+            <div class="exchange-block__available-coins">
+              <div class="flex available-coins__container">
+                <strong class="available-coins__strong">Вы получаете</strong>
+                <div class="flex available-coins__buttons">
+                  <div class="available-coins__button" :class="isSelectedCourse ? 'available-coins__active' : ''"
+                    @click="isSelectedCourse = true">курс</div>
+                  &nbsp;
+                  <div class="available-coins__button" :class="!isSelectedCourse ? 'available-coins__active' : ''"
+                    @click="isSelectedCourse = false">резерв</div>
+                </div>
+              </div>
+              <ul>
+                <li v-for="item in fakeConvertCoins" :key="item.id">
+                  <AppCoinAvailableItem :id="item.id" :name="item.name" :imageUrl="item.imageUrl"
+                    :course="myCoin.isFiat ? item.course : myCoin.course" :reserve="item.available"
+                    :isSelectedCourse="isSelectedCourse" :isFiat="item.isFiat"
+                    :selectedCoin="convertCoin.id == item.id ? true : false" @action="selectAvailableCoin" />
+                </li>
+              </ul>
+            </div>
           </div>
           <AppFiatToCrypto :pairCoins="pairCoins" />
         </div>
@@ -235,12 +237,19 @@ li {
   display: flex;
 }
 
+.exchange-block__all-coins {
+  display: flex;
+  max-width: 740px;
+  width: 100%;
+}
+
 .exchange-block__your-coins,
 .exchange-block__available-coins {
   background-color: white;
   border-radius: 4px;
   box-shadow: 0px 0px 1px lightgray;
   padding: 20px 10px;
+  height: fit-content;
 }
 
 .yours-coins__strong {
@@ -282,5 +291,66 @@ li {
 .available-coins__container {
   justify-content: space-between;
   align-items: center;
+}
+
+@media(max-width: 1190px) {
+  .exchange-block {
+    margin: 0 20px;
+  }
+}
+
+@media(max-width: 960px) {
+  .exchange-block {
+    flex-direction: column;
+  }
+
+  .exchange-block__all-coins {
+    max-width: none;
+  }
+
+  .exchange-block__available-coins {
+    max-width: none;
+  }
+
+
+}
+
+@media (max-width: 700px) {
+  .available-coins__buttons {
+    display: none;
+  }
+
+  .coin__info {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .yours-coins__strong {
+    white-space: nowrap;
+  }
+
+  .available-coins__strong {
+    white-space: nowrap;
+  }
+
+  .content {
+    padding: 0 10px 0 10px;
+  }
+}
+
+@media(max-width: 450px) {
+  .exchange-block__all-coins {
+    flex-direction: column;
+  }
+
+  .exchange-block__your-coins {
+    max-width: none;
+  }
+
+  .exchange-block__available-coins {
+    margin-left: 0px;
+    margin-top: 20px;
+  }
 }
 </style>

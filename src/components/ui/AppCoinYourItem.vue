@@ -89,4 +89,23 @@ p {
     width: 20px;
     height: 20px;
 }
+
+@media (max-width: 560px) {
+    .coin__block {
+        flex-direction: column;
+        margin: 0 auto;
+    }
+
+    .coin__block p {
+        padding-left: 0;
+    }
+}
+
+@media(max-width: 450px) {
+    .coin:hover {
+        .coin__arrow {
+            display: none;
+        }
+    }
+}
 </style>

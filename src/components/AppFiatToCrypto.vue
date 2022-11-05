@@ -374,4 +374,25 @@ export default Vue.extend({
 .checkbox-container {
     align-items: center;
 }
+
+@media (max-width: 960px) {
+
+    .exchange-card,
+    .alert-with-convert {
+        margin-left: 0px;
+        margin-top: 20px;
+    }
+
+    .alert-with-convert {
+        max-width: none;
+    }
+
+    .exchange-card {
+        max-width: none;
+    }
+
+    .input-text {
+        max-width: none;
+    }
+}
 </style>
