@@ -107,7 +107,7 @@ export default Vue.extend({
 }
 
 .light-gray {
-    color: light-gray;
+    color: lightgray;
 }
 
 .input-text {
@@ -137,6 +137,7 @@ export default Vue.extend({
     background-color: #fff;
     border-radius: 5px;
     box-shadow: 0 0 5px lightgray;
+    margin-bottom: 20px;
 }
 
 .card h2 {
@@ -217,7 +218,7 @@ export default Vue.extend({
 
 .container-all-reviews {
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
     margin: 20px 0;
 }
 
@@ -236,7 +237,30 @@ img {
     padding: 20px 0;
 }
 
-.card {
-    margin-bottom: 20px;
+@media (max-width: 960px) {
+    .content {
+        flex-direction: column;
+    }
+
+    .card {
+        width: auto;
+    }
+
+    .input-text {
+        max-width: none;
+    }
+
+    .review-container {
+        max-width: none;
+    }
+
+    img {
+        width: 236px;
+        width: 300px;
+    }
+
+    .auth-and-reviews {
+        margin-top: 20px;
+    }
 }
 </style>
