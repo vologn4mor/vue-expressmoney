@@ -8,8 +8,13 @@
               <strong class="yours-coins__strong">Вы отдаете</strong>
               <ul>
                 <li v-for="item in fakeCoins" :key="item.id">
-                  <AppCoinYourItem :id="item.id" :name="item.name" :imageUrl="item.imageUrl"
-                    :selectedCoin="myCoin.id == item.id ? true : false" @action="selectYourCoin" />
+                  <AppCoinYourItem
+                    :id="item.id"
+                    :name="item.name"
+                    :imageUrl="item.imageUrl"
+                    :selectedCoin="myCoin.id === item.id"
+                    @action="selectYourCoin"
+                  />
                 </li>
               </ul>
             </div>
@@ -17,7 +22,7 @@
               <div class="flex available-coins__container">
                 <strong class="available-coins__strong">Вы получаете</strong>
                 <div class="flex available-coins__buttons">
-                  <div class="available-coins__button" :class="isSelectedCourse ? 'available-coins__active' : ''"
+                  <div class="available-coins__button" :class="{'available-coins__active' : isSelectedCourse}"
                     @click="isSelectedCourse = true">курс</div>
                   &nbsp;
                   <div class="available-coins__button" :class="!isSelectedCourse ? 'available-coins__active' : ''"
@@ -29,7 +34,7 @@
                   <AppCoinAvailableItem :id="item.id" :name="item.name" :imageUrl="item.imageUrl"
                     :course="myCoin.isFiat ? item.course : myCoin.course" :reserve="item.available"
                     :isSelectedCourse="isSelectedCourse" :isFiat="item.isFiat"
-                    :selectedCoin="convertCoin.id == item.id ? true : false" @action="selectAvailableCoin" />
+                    :selectedCoin="convertCoin.id === item.id" @action="selectAvailableCoin" />
                 </li>
               </ul>
             </div>
@@ -140,6 +145,21 @@ var threeLastFakeReviews: IReview[] = [{
   text: "Все сделали достаточно быстро"
 }]
 
+// ToDo
+const ASSETS = [
+  {id: 'BTC', name: 'BTC', img: '', currency: 'BTC', round: 6},
+  {id: 'Oschadbank', name: 'Oschadbank', img: '', currency: 'UAH', round: 2},
+];
+
+// ToDo
+const getDirections = [
+  {give: 'BTC', get: 'Oschadbank', course: 12500, rezerv: 25000, min: 2500, max: 29000},
+  {give: 'BTC', get: 'Monobank', course: 12600, rezerv: 30000, min: 2500, max: 29000},
+  {give: 'ETH', get: 'Oschadbank', course: 1250, rezerv: 25000, min: 2500, max: 29000},
+  {give: 'LTC', get: 'Oschadbank', course: 125, rezerv: 25000, min: 2500, max: 29000},
+];
+
+
 export default Vue.extend({
   name: 'Home',
   data() {
@@ -158,6 +178,17 @@ export default Vue.extend({
   },
   methods: {
     selectYourCoin(id: Number): void {
+
+      // ToDo: .filter или .forEach
+
+      // let mappedCoins = this.fakeCoins.map(el => ({
+      //   ...el,
+      //   _isFiatStr: el.isFiat ? 'это фиат' : 'это не фиат'
+      // }));
+      //
+      // mappedCoin
+
+
       this.fakeCoins.map(coin => {
         if (coin.id == id) {
           if (this.myCoin.isFiat != coin.isFiat) {  // обнуление списка доступных монет при выборе своих монет
