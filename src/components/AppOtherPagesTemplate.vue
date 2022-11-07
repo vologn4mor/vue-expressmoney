@@ -129,6 +129,7 @@ export default Vue.extend({
 .main-content {
     max-width: 851px;
     width: 100%;
+    margin-right: 20px;
 }
 
 .card {
