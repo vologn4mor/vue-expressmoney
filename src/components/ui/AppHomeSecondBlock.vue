@@ -15,13 +15,13 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import block1 from "@/assets/images/homeSecondBlock/block1.png"
-import block2 from "@/assets/images/homeSecondBlock/block2.png"
-import block3 from "@/assets/images/homeSecondBlock/block3.png"
-import block4 from "@/assets/images/homeSecondBlock/block4.png"
-import block5 from "@/assets/images/homeSecondBlock/block5.png"
-import block6 from "@/assets/images/homeSecondBlock/block6.png"
+import Vue from 'vue'
+import block1 from '@/assets/images/homeSecondBlock/block1.png'
+import block2 from '@/assets/images/homeSecondBlock/block2.png'
+import block3 from '@/assets/images/homeSecondBlock/block3.png'
+import block4 from '@/assets/images/homeSecondBlock/block4.png'
+import block5 from '@/assets/images/homeSecondBlock/block5.png'
+import block6 from '@/assets/images/homeSecondBlock/block6.png'
 
 interface IElement {
     imageUrl: string,
@@ -30,38 +30,38 @@ interface IElement {
 }
 
 const cards: IElement[] = [
-    {
-        imageUrl: block1,
-        bold: "12 мин",
-        text: 'Время обработки последней заявки',
-    }, {
-        imageUrl: block2,
-        bold: "30 мин",
-        text: 'Среднее время обработки заявки',
-    }, {
-        imageUrl: block3,
-        bold: "1 мин",
-        text: 'Среднее время ответа оператора',
-    }, {
-        imageUrl: block4,
-        bold: "1 год",
-        text: 'Как давно работаем',
-    }, {
-        imageUrl: block5,
-        bold: "239",
-        text: 'Пользователей зарегистрировано',
-    }, {
-        imageUrl: block6,
-        text: 'Отзывов о нас на Bestchange.ru',
-    },
+  {
+    imageUrl: block1,
+    bold: '12 мин',
+    text: 'Время обработки последней заявки'
+  }, {
+    imageUrl: block2,
+    bold: '30 мин',
+    text: 'Среднее время обработки заявки'
+  }, {
+    imageUrl: block3,
+    bold: '1 мин',
+    text: 'Среднее время ответа оператора'
+  }, {
+    imageUrl: block4,
+    bold: '1 год',
+    text: 'Как давно работаем'
+  }, {
+    imageUrl: block5,
+    bold: '239',
+    text: 'Пользователей зарегистрировано'
+  }, {
+    imageUrl: block6,
+    text: 'Отзывов о нас на Bestchange.ru'
+  }
 ]
 
 export default Vue.extend({
-    data() {
-        return {
-            cards,
-        }
+  data () {
+    return {
+      cards
     }
+  }
 })
 
 </script>
@@ -110,8 +110,6 @@ export default Vue.extend({
         margin-bottom: 20px;
         text-align: center;
     }
-
-
 
 }
 </style>

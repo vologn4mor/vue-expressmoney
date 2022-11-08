@@ -11,8 +11,8 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import AppOtherPagesTemplate from '@/components/AppOtherPagesTemplate.vue';
-import AppCard from "@/components/ui/AppCard.vue"
+import AppOtherPagesTemplate from '@/components/AppOtherPagesTemplate.vue'
+import AppCard from '@/components/ui/AppCard.vue'
 
 interface IFaq {
     question: string,
@@ -20,16 +20,16 @@ interface IFaq {
 }
 
 const faqs: IFaq[] = [{
-    question: "test?",
-    answer: "test"
+  question: 'test?',
+  answer: 'test'
 }]
 
 export default Vue.extend({
-    components: {
-        AppOtherPagesTemplate,
-        AppCard
-    }
-});
+  components: {
+    AppOtherPagesTemplate,
+    AppCard
+  }
+})
 </script>
 
 <style lang="scss">

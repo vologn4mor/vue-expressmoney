@@ -16,23 +16,23 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import bestchange from "@/assets/images/homeFivethBlock/bestchange.gif"
-import exchangesumo from "@/assets/images/homeFivethBlock/exchangesumo.png"
-import rateex from "@/assets/images/homeFivethBlock/rateex.gif"
-import glazok from "@/assets/images/homeFivethBlock/glazok.gif"
-import okchanger from "@/assets/images/homeFivethBlock/okchanger.png"
+import Vue from 'vue'
+import bestchange from '@/assets/images/homeFivethBlock/bestchange.gif'
+import exchangesumo from '@/assets/images/homeFivethBlock/exchangesumo.png'
+import rateex from '@/assets/images/homeFivethBlock/rateex.gif'
+import glazok from '@/assets/images/homeFivethBlock/glazok.gif'
+import okchanger from '@/assets/images/homeFivethBlock/okchanger.png'
 
 export default Vue.extend({
-    data() {
-        return {
-            bestchange,
-            exchangesumo,
-            rateex,
-            glazok,
-            okchanger
-        }
+  data () {
+    return {
+      bestchange,
+      exchangesumo,
+      rateex,
+      glazok,
+      okchanger
     }
+  }
 })
 </script>
 

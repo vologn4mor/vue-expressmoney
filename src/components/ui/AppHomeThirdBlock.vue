@@ -95,27 +95,27 @@
 </template>
 
 <script lang="ts">
-import IReview from "@/interfaces/IReview";
-import ICoin from "@/interfaces/ICoin";
-import Vue from "vue";
+import IReview from '@/interfaces/IReview'
+import ICoin from '@/interfaces/ICoin'
+import Vue from 'vue'
 
 export default Vue.extend({
-    data() {
-        return {
-            hideReserve: true
-        }
-    },
-    props: {
-        lastReviews: {
-            type: Array as () => Array<IReview>,
-            required: true
-        },
-        fakeCoins: {
-            type: Array as () => Array<ICoin>,
-            required: true
-        },
+  data () {
+    return {
+      hideReserve: true
     }
-});
+  },
+  props: {
+    lastReviews: {
+      type: Array as () => Array<IReview>,
+      required: true
+    },
+    fakeCoins: {
+      type: Array as () => Array<ICoin>,
+      required: true
+    }
+  }
+})
 </script>
 
 <style scoped lang="scss">

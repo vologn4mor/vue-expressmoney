@@ -19,7 +19,14 @@
       </div>
       <div class="menu">
         <v-col class="d-flex droplist" cols="12" sm="6">
-          <v-select :items="languages" v-model="language" color="#6377f7" dense :single-line="true" outlined>
+          <v-select
+            :items="languages"
+            v-model="language"
+            color="#6377f7"
+            dense
+            :single-line="true"
+            outlined
+          >
           </v-select>
           <router-link to="/login" class="btn">
             <span class="btn login">Войти</span>
@@ -30,9 +37,15 @@
           <v-list>
             <v-menu transition="slide-y-transition" bottom>
               <template v-slot:activator="{ on, attrs }">
-                <v-app-bar-nav-icon color="primary" dark v-bind="attrs" v-on="on" class="menu__small" width="30"
-                  height="0">
-
+                <v-app-bar-nav-icon
+                  color="primary"
+                  dark
+                  v-bind="attrs"
+                  v-on="on"
+                  class="menu__small"
+                  width="30"
+                  height="0"
+                >
                 </v-app-bar-nav-icon>
               </template>
               <v-list>
@@ -53,56 +66,53 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import logo from '@/assets/images/logo.png';
+import Vue from 'vue'
+import logo from '@/assets/images/logo.png'
 
 export default Vue.extend({
   name: 'AppHeader',
 
-  data() {
+  data () {
     return {
       logo: logo,
       language: 'RU',
       languages: [
         {
-          text: "RU",
-          value: "RU",
+          text: 'RU',
+          value: 'RU'
         },
         {
-          text: "EN",
-          value: "EN",
+          text: 'EN',
+          value: 'EN'
         }
       ],
       routes: [
         {
-          title: "Главная",
-          link: "/"
+          title: 'Главная',
+          link: '/'
         },
         {
-          title: "Правила",
-          link: "/rules"
+          title: 'Правила',
+          link: '/rules'
         },
         {
-          title: "FAQ",
-          link: "/faq"
+          title: 'FAQ',
+          link: '/faq'
         },
         {
-          title: "Отзывы",
-          link: "/reviews"
+          title: 'Отзывы',
+          link: '/reviews'
         },
         {
-          title: "Контакты",
-          link: "/feedback"
-        },
+          title: 'Контакты',
+          link: '/feedback'
+        }
       ]
     }
   },
 
-  components: {
-
-  }
+  components: {}
 })
-
 </script>
 
 <style scoped lang="scss">
@@ -128,11 +138,8 @@ li {
 }
 
 .router.router-link-exact-active {
-
   color: $primaryColor;
 }
-
-
 
 .header {
   box-shadow: 0 0 5px #e1e9f2;
@@ -219,7 +226,7 @@ li {
   }
 }
 
-@media(max-width: 960px) {
+@media (max-width: 960px) {
   .header {
     height: 60px;
   }
@@ -256,7 +263,7 @@ li {
   }
 }
 
-@media(max-width: 599px) {
+@media (max-width: 599px) {
   .menu {
     max-width: 140px;
   }

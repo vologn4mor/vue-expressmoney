@@ -57,37 +57,37 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue from 'vue'
 
-import IReview from "@/interfaces/IReview";
+import IReview from '@/interfaces/IReview'
 
-import exchangeSumo from "@/assets/images/exchangeSumo.svg";
+import exchangeSumo from '@/assets/images/exchangeSumo.svg'
 
-var threeLastFakeReviews: IReview[] = [{
-    id: 1,
-    name: "Владимир",
-    date: "27.08.2022, 19:46",
-    text: "Все супер - рекомендую"
+const threeLastFakeReviews: IReview[] = [{
+  id: 1,
+  name: 'Владимир',
+  date: '27.08.2022, 19:46',
+  text: 'Все супер - рекомендую'
 }, {
-    id: 2,
-    name: "Николай",
-    date: "27.09.2020, 18:46",
-    text: "Поменял все без проблем"
+  id: 2,
+  name: 'Николай',
+  date: '27.09.2020, 18:46',
+  text: 'Поменял все без проблем'
 }, {
-    id: 3,
-    name: "Александр",
-    date: "27.10.2020, 19:48",
-    text: "Все сделали достаточно быстро"
+  id: 3,
+  name: 'Александр',
+  date: '27.10.2020, 19:48',
+  text: 'Все сделали достаточно быстро'
 }]
 
 export default Vue.extend({
-    data() {
-        return {
-            lastReviews: threeLastFakeReviews,
-            exchangeSumo
-        }
+  data () {
+    return {
+      lastReviews: threeLastFakeReviews,
+      exchangeSumo
     }
-});
+  }
+})
 </script>
 
 <style scoped lang="scss">

@@ -23,68 +23,68 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import bestchange from "@/assets/images/bestchange.png"
-import glazok from "@/assets/images/glazok.png"
-import fbIco from "@/assets/images/fb-ico.png"
-import insIco from "@/assets/images/ins-ico.png"
-import tmIco from "@/assets/images/tm-ico.png"
-import twIco from "@/assets/images/tw-ico.png"
-import vkIco from "@/assets/images/vk-ico.png"
+import Vue from 'vue'
+import bestchange from '@/assets/images/bestchange.png'
+import glazok from '@/assets/images/glazok.png'
+import fbIco from '@/assets/images/fb-ico.png'
+import insIco from '@/assets/images/ins-ico.png'
+import tmIco from '@/assets/images/tm-ico.png'
+import twIco from '@/assets/images/tw-ico.png'
+import vkIco from '@/assets/images/vk-ico.png'
 
 export default Vue.extend({
-    data() {
-        return {
-            mySocials: [
-                {
-                    name: "VK",
-                    image: vkIco,
-                    link: "https://google.com"
-                },
-                {
-                    name: "Facebook",
-                    image: fbIco,
-                    link: "/"
-                },
-                {
-                    name: "Twitter",
-                    image: twIco,
-                    link: "/"
-                }, {
-                    name: "Instagram",
-                    image: insIco,
-                    link: "/"
-                }, {
-                    name: "Telegram",
-                    image: tmIco,
-                    link: "/"
-                },
-            ],
-            partnersSocials: [
-                {
-                    name: "BestChange",
-                    image: bestchange,
-                    link: "/"
-                }, {
-                    name: "Glazok",
-                    image: glazok,
-                    link: "/"
-                },
-            ],
-            links: [
-                {
-                    title: "Безопасность",
-                    url: "/notice"
-                }, {
-                    title: "Правила",
-                    url: "/rules"
-                }, {
-                    title: "Политика конфиденциальности",
-                    url: "/politika"
-                },
-            ]
+  data () {
+    return {
+      mySocials: [
+        {
+          name: 'VK',
+          image: vkIco,
+          link: 'https://google.com'
+        },
+        {
+          name: 'Facebook',
+          image: fbIco,
+          link: '/'
+        },
+        {
+          name: 'Twitter',
+          image: twIco,
+          link: '/'
+        }, {
+          name: 'Instagram',
+          image: insIco,
+          link: '/'
+        }, {
+          name: 'Telegram',
+          image: tmIco,
+          link: '/'
         }
+      ],
+      partnersSocials: [
+        {
+          name: 'BestChange',
+          image: bestchange,
+          link: '/'
+        }, {
+          name: 'Glazok',
+          image: glazok,
+          link: '/'
+        }
+      ],
+      links: [
+        {
+          title: 'Безопасность',
+          url: '/notice'
+        }, {
+          title: 'Правила',
+          url: '/rules'
+        }, {
+          title: 'Политика конфиденциальности',
+          url: '/politika'
+        }
+      ]
     }
+  }
 })
 </script>
 

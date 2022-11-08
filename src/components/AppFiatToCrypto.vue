@@ -3,7 +3,7 @@
         <div class="alert-with-convert">
             <div class="alert">
                 <strong class="alert-strong">Внимание!</strong>
-                <ul class="alert-ul" v-if="pairCoins[0].isFiat">
+                <!-- <ul class="alert-ul" v-if="pairCoins[0].isFiat">
                     <li class="alert-li danger" :style="{ listStyleImage: 'url(' + liarr + ')' }">Требуется
                         обязательная верификация
                         счета, для осуществления данной операции.</li>
@@ -15,8 +15,8 @@
                         получена
                         мы произведем перевод средств на указанные в заявке реквизиты.
                     </li>
-                </ul>
-                <ul class="alert-ul" v-else>
+                </ul> -->
+                <!-- <ul class="alert-ul" v-else>
                     <li class="alert-li" :style="{ listStyleImage: 'url(' + liarr + ')' }">
                         Данная операция производится круглосуточно в автоматическом режиме и занимает от 5 до 60 минут
                     </li>
@@ -37,29 +37,29 @@
                     <li class="alert-li" :style="{ listStyleImage: 'url(' + liarr + ')' }">
                         Курс фиксируется по бирже <span class="bold">Binance</span>.
                     </li>
-                </ul>
+                </ul> -->
             </div>
         </div>
         <div>
             <div class="exchange-card">
                 <strong>Ввод данных</strong>
-                <p><span class="bold">Курс обмена:</span> {{ formatCourse }}<br>
+                <!-- <p><span class="bold">Курс обмена:</span> {{ formatCourse }}<br>
                     <span class="bold">Резерв:</span> {{ pairCoins[0].available }} {{ pairCoins[0].code }} <a href="">Не
                         хватает?</a>
-                </p>
+                </p> -->
                 <form>
                     <div>
-                        <div class="your-coin">
+                        <!-- <div class="your-coin">
                             <img :src="pairCoins[0].imageUrl" alt="your-coin" />
                             <span class="bold">{{ pairCoins[0].name }}</span>
                         </div>
                         <p>min.: {{ pairCoins[0].min }} {{ pairCoins[0].code }} max.: {{ pairCoins[0].max }}
-                            {{ pairCoins[0].code }}</p>
+                            {{ pairCoins[0].code }}</p> -->
                     </div>
                     <div class="input-container">
                         <label>
                             <small class="light-gray">Сумма<span class="danger">*</span>:</small><br>
-                            <input class="input-text" type="text" v-model.number="mySum" @input="mySumChange()" />
+                            <!-- <input class="input-text" type="text" v-model.number="mySum" @input="mySumChange()" /> -->
                         </label>
                     </div>
                     <div class="input-container">
@@ -76,19 +76,19 @@
                     </div>
                     <div class="arrow-to-convert"><span>></span></div>
                     <div>
-                        <div class="your-coin">
+                        <!-- <div class="your-coin">
                             <img :src="pairCoins[1].imageUrl" alt="your-coin" />
                             <span class="bold">{{ pairCoins[1].name }}</span>
                         </div>
                         <p>min.: {{ pairCoins[1].min }} {{ pairCoins[1].code }} max.: {{ pairCoins[1].max }}
-                            {{ pairCoins[1].code }}</p>
+                            {{ pairCoins[1].code }}</p> -->
                     </div>
                     <div class="input-container">
-                        <label>
+                        <!-- <label>
                             <small class="light-gray">Сумма<span class="danger">*</span>:</small><br>
                             <input class="input-text" type="text" v-model.number="convertSum"
                                 @input="convertSumChange()" />
-                        </label>
+                        </label> -->
                     </div>
                     <div class="input-container">
                         <label>
@@ -123,114 +123,114 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import liarr from "@/assets/images/liarr.png"
-import ICoin from "@/interfaces/ICoin";
+import Vue from 'vue'
+import liarr from '@/assets/images/liarr.png'
+import ICoin from '@/interfaces/ICoin'
 
 export default Vue.extend({
-    props: {
-        pairCoins: {
-            type: Array as () => Array<ICoin>,
-            required: true
-        }
-    },
-    data() {
-        return {
-            liarr,
-            mySum: 0,
-            convertSum: 0,
-            // blockedWatchMySum: true,
-            // blockedWatchConvertSum: true,
-            blockedWatch: false,
-        }
-    },
-    methods: {
-        getBeautifulNumber(n: number): number {
-            let counter = 0;
-            let result: Number = n;
-            if (n > 1) { // убираем числа после запятой 
-                counter++
-            }
-            while (n < 1) {
-                n *= 10
-                counter++;
-            }
-            counter += 3
-            return parseFloat(result.toFixed(counter))
-        },
-        convertSumChange() {
-            if (this.convertSum > 0) {
-                if (this.pairCoins[0].isFiat) {
-                    this.mySum = this.getBeautifulNumber(this.convertSum * this.pairCoins[1].course);
-                } else {
-                    this.mySum = this.getBeautifulNumber(this.convertSum * this.pairCoins[0].course);
-                }
-            }
-        },
-        mySumChange() {
-            if (this.mySum > 0) {
-                this.convertSum = this.mySum / this.pairCoins[1].course;
-                if (this.pairCoins[0].isFiat) {
-                    this.convertSum = this.getBeautifulNumber(this.mySum / this.pairCoins[1].course);
-                } else {
-                    this.convertSum = this.getBeautifulNumber(this.mySum / this.pairCoins[0].course);
-                }
-            }
-        }
-    },
-    computed: {
-        formatCourse(): String {
-            if (this.pairCoins[0].isFiat) {
-                return `${this.pairCoins[1].course} ${this.pairCoins[0].code} = 1 ${this.pairCoins[1].code}`
-            } else {
-                return `1 ${this.pairCoins[0].code} = ${this.pairCoins[0].course} ${this.pairCoins[1].code}`
-            }
-        },
-
-    },
-    updated() {
-        // if (this.mySum > 0 && this.convertSum > 0) {
-        //     this.convertSum = this.getBeautifulNumber(this.mySum);
-        //     this.mySum = this.getBeautifulNumber(this.convertSum);
-        // }
-    },
-    watch: {
-        pairCoins: function (newVal: Array<ICoin>, oldVal: Array<ICoin>) {
-            if (oldVal[0].id != newVal[0].id) {
-                this.mySum = 0;
-                this.convertSum = 0;
-                return;
-            }
-            if (oldVal[1].id != newVal[1].id) {
-                this.mySumChange();
-            }
-        }
-        // mySum: function () {
-        //     // this.blockedWatchConvertSum = true;
-        //     if (this.blockedWatch) {
-        //         return;
-        //     }
-        //     this.blockedWatch = true;
-        //     if (this.mySum > 0) {
-        //         this.convertSum = this.getBeautifulNumber(this.mySum);
-        //     }
-        //     // this.blockedWatchConvertSum = false;
-        //     this.blockedWatch = false;
-        // },
-        // convertSum: function () {
-        //     // this.blockedWatchMySum = true;
-
-        //     if (this.blockedWatch) {
-        //         return;
-        //     }
-        //     this.blockedWatch = true;
-        //     if (this.convertSum > 0) {
-        //         this.mySum = this.getBeautifulNumber(this.convertSum);
-        //     }
-        //     this.blockedWatch = false;
-        //     // this.blockedWatchMySum = false;
-        // }
+  props: {
+    pairCoins: {
+      type: Array as () => Array<ICoin>,
+      required: true
     }
+  },
+  data () {
+    return {
+      liarr,
+      mySum: 0,
+      convertSum: 0,
+      // blockedWatchMySum: true,
+      // blockedWatchConvertSum: true,
+      blockedWatch: false
+    }
+  },
+  methods: {
+    // getBeautifulNumber (n: number): number {
+    //   let counter = 0
+    //   const result: number = n
+    //   if (n > 1) { // убираем числа после запятой
+    //     counter++
+    //   }
+    //   while (n < 1) {
+    //     n *= 10
+    //     counter++
+    //   }
+    //   counter += 3
+    //   return parseFloat(result.toFixed(counter))
+    // },
+    // convertSumChange () {
+    //   if (this.convertSum > 0) {
+    //     if (this.pairCoins[0].isFiat) {
+    //       this.mySum = this.getBeautifulNumber(this.convertSum * this.pairCoins[1].course)
+    //     } else {
+    //       this.mySum = this.getBeautifulNumber(this.convertSum * this.pairCoins[0].course)
+    //     }
+    //   }
+    // },
+    // mySumChange () {
+    //   if (this.mySum > 0) {
+    //     this.convertSum = this.mySum / this.pairCoins[1].course
+    //     if (this.pairCoins[0].isFiat) {
+    //       this.convertSum = this.getBeautifulNumber(this.mySum / this.pairCoins[1].course)
+    //     } else {
+    //       this.convertSum = this.getBeautifulNumber(this.mySum / this.pairCoins[0].course)
+    //     }
+    //   }
+    // }
+  },
+  computed: {
+    // formatCourse (): string {
+    //   if (this.pairCoins[0].isFiat) {
+    //     return `${this.pairCoins[1].course} ${this.pairCoins[0].code} = 1 ${this.pairCoins[1].code}`
+    //   } else {
+    //     return `1 ${this.pairCoins[0].code} = ${this.pairCoins[0].course} ${this.pairCoins[1].code}`
+    //   }
+    // }
+
+  },
+  updated () {
+    // if (this.mySum > 0 && this.convertSum > 0) {
+    //     this.convertSum = this.getBeautifulNumber(this.mySum);
+    //     this.mySum = this.getBeautifulNumber(this.convertSum);
+    // }
+  },
+  watch: {
+    // pairCoins: function (newVal: Array<ICoin>, oldVal: Array<ICoin>) {
+    //   if (oldVal[0].id != newVal[0].id) {
+    //     this.mySum = 0
+    //     this.convertSum = 0
+    //     return
+    //   }
+    //   if (oldVal[1].id != newVal[1].id) {
+    //     this.mySumChange()
+    //   }
+    // }
+    // mySum: function () {
+    //     // this.blockedWatchConvertSum = true;
+    //     if (this.blockedWatch) {
+    //         return;
+    //     }
+    //     this.blockedWatch = true;
+    //     if (this.mySum > 0) {
+    //         this.convertSum = this.getBeautifulNumber(this.mySum);
+    //     }
+    //     // this.blockedWatchConvertSum = false;
+    //     this.blockedWatch = false;
+    // },
+    // convertSum: function () {
+    //     // this.blockedWatchMySum = true;
+
+    //     if (this.blockedWatch) {
+    //         return;
+    //     }
+    //     this.blockedWatch = true;
+    //     if (this.convertSum > 0) {
+    //         this.mySum = this.getBeautifulNumber(this.convertSum);
+    //     }
+    //     this.blockedWatch = false;
+    //     // this.blockedWatchMySum = false;
+    // }
+  }
 })
 </script>
 
