@@ -1,10 +1,7 @@
 <template>
   <div
     class="coin"
-    @click="
-      {
-      }
-    "
+    @click="changeGetCoin(name)"
     :class="selectedCoin ? 'selected' : null"
   >
     <div class="coin__block">
@@ -13,7 +10,7 @@
     </div>
     <div class="coin__info">
       <p v-if="isSelectedCourse ? course : rezerv">
-        {{ isSelectedCourse ? course : rezerv }}
+        {{ isSelectedCourse ? formatCourse : rezerv }}
       </p>
     </div>
   </div>
@@ -21,6 +18,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { mapMutations } from 'vuex'
 
 export default Vue.extend({
   data () {
@@ -54,21 +52,24 @@ export default Vue.extend({
     selectedCoin: {
       type: Boolean,
       required: true
+    },
+    isFiat: {
+      type: Boolean,
+      required: true
     }
-    // isFiat: {
-    //   type: Boolean,
-    //   required: true
-    // }
+  },
+  computed: {
+    formatCourse (): string {
+      if (this.isFiat) {
+        return '1 - ' + this.course
+      } else {
+        return this.course + ' - 1'
+      }
+    }
+  },
+  methods: {
+    ...mapMutations('coins', ['changeGetCoin'])
   }
-  // computed: {
-  //   formatCourse (): string {
-  //     if (this.isFiat) {
-  //       return '1 - ' + this.course
-  //     } else {
-  //       return this.course + ' - 1'
-  //     }
-  //   }
-  // }
 })
 </script>
 

@@ -22,5 +22,6 @@ interface IGet {
 export default interface ICoin {
   id: number
   give: string
+  isFiat: boolean
   get: IGet[]
 }

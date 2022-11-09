@@ -47,6 +47,7 @@
                     :isSelectedCourse="isSelectedCourse"
                     :selectedCoin="item.name === activeGetCoin"
                     :course="item.course"
+                    :isFiat="getIsFiat"
                   />
                 </li>
               </ul>
@@ -297,7 +298,8 @@ export default Vue.extend({
       'listGiveCoins',
       'activeGiveCoin',
       'listGetCoins',
-      'activeGetCoin'
+      'activeGetCoin',
+      'getIsFiat'
     ])
   }
 })

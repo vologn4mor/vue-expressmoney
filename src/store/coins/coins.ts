@@ -6,6 +6,7 @@ const coins: ICoin[] = [
   {
     id: 1,
     give: 'Bitcoin',
+    isFiat: false,
     get: [
       {
         name: 'Monobank',
@@ -16,7 +17,7 @@ const coins: ICoin[] = [
       },
       {
         name: 'Oschadbank',
-        course: 820959.1751,
+        course: 821000.1751,
         rezerv: 50000,
         min: 2500,
         max: 29000
@@ -26,6 +27,7 @@ const coins: ICoin[] = [
   {
     id: 2,
     give: 'Monobank',
+    isFiat: true,
     get: [
       {
         name: 'Bitcoin',
@@ -53,6 +55,7 @@ const coins: ICoin[] = [
   {
     id: 3,
     give: 'Oschadbank',
+    isFiat: true,
     get: [
       {
         name: 'Bitcoin',
@@ -80,6 +83,7 @@ const coins: ICoin[] = [
   {
     id: 4,
     give: 'Tron',
+    isFiat: false,
     get: [
       {
         name: 'Monobank',
@@ -100,6 +104,7 @@ const coins: ICoin[] = [
   {
     id: 5,
     give: 'Etherium',
+    isFiat: false,
     get: [
       {
         name: 'Monobank',
@@ -143,6 +148,7 @@ const state = {
   coins,
   pair: {
     give: coins[0].give,
+    isFiat: coins[0].isFiat,
     get: coins[0].get[0].name,
     course: coins[0].get[0].course,
     rezerv: coins[0].get[0].rezerv,
@@ -184,6 +190,9 @@ export default {
     getPair (state: State) {
       return state.pair
     },
+    getIsFiat (state: State) {
+      return state.pair.isFiat
+    },
     listGetCoins (state: State) {
       let result: IGetItem[] = []
       state.coins.forEach((coin) => {
@@ -208,14 +217,55 @@ export default {
   },
   mutations: {
     changeGiveCoin (state: State, id: number) {
-      let selectedCoin = ''
-      state.coins.filter((coin) => {
+      state.coins.filter((coin, idx) => {
         if (coin.id === id) {
-          selectedCoin = coin.give
+          // поиск монеты в стейте и изменения выбранной монеты в паре
+          state.pair.give = coin.give
+          const getCoinsNames: string[] = []
+          coin.get.filter((getCoin) => {
+            getCoinsNames.push(getCoin.name) // получение имен монет и проверка существуют ли они в паре,
+          })
+          if (getCoinsNames.includes(state.pair.get)) {
+            coin.get.filter((getCoin) => {
+              // если существует, проходимся по массиву и обновляем данные, т.к они могут отличаться
+              if (getCoin.name === state.pair.get) {
+                state.pair.course = getCoin.course
+                state.pair.isFiat = coin.isFiat
+                state.pair.max = getCoin.max
+                state.pair.min = getCoin.min
+                state.pair.rezerv = getCoin.rezerv
+              }
+            })
+          } else {
+            // если не существует, выбираем первую монету из доступных для обмена
+            state.pair.get = coin.get[0].name
+            state.pair.course = coin.get[0].course
+            state.pair.isFiat = coin.isFiat
+            state.pair.max = coin.get[0].max
+            state.pair.min = coin.get[0].min
+            state.pair.rezerv = coin.get[0].rezerv
+          }
         }
       })
-      state.pair.give = selectedCoin
     },
-    changeGetCoin (state: State, idx: number) {}
+    changeGetCoin (state: State, name: string) {
+      state.pair.get = name
+      state.coins.forEach((giveCoin) => {
+        // поиск в стейте монеты give
+        if (giveCoin.give === state.pair.give) {
+          // если находим, то ищем монету на которую меняем
+          giveCoin.get.forEach((getCoin) => {
+            if (getCoin.name === name) {
+              // если находим, то меняем данные в pairCoins
+              state.pair.get = getCoin.name
+              state.pair.course = getCoin.course
+              state.pair.max = getCoin.max
+              state.pair.min = getCoin.min
+              state.pair.rezerv = getCoin.rezerv
+            }
+          })
+        }
+      })
+    }
   }
 }
