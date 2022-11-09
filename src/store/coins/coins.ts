@@ -167,25 +167,34 @@ export default {
     // ToDo: по названиям старайся придерживаться одного стиля, а то в одном месте есть префикс гет, в другом нет и т.д.
     //  Называть можно по разному, но чтобы названия были логичными и отражали суть
     listGiveCoins (state: State) {
-      // ToDo: тут логичнее .map вместо .forEach
-      const list: IGiveItem[] = []
-      state.coins.forEach((coin: ICoin) => {
-        // выбираем из стора только айди и имя монеты
-        let url = ''
-        // ToDo: тут ошибка в логике, ставь точки с запятой, чтобы визуально легче читалось
-        imagesLinks.find((e) => {
-          // ищем изображание
-          if (e.name === coin.give) {
-            url = e.link
-          }
-        })
-        list.push({
+      return state.coins.map((coin: ICoin) => {
+        const image = imagesLinks.find((e) => e.name === coin.give);
+        return {
           id: coin.id,
           name: coin.give,
-          imgUrl: url
-        })
-      })
-      return list
+          imgUrl: image?.url ? image.url : ''
+        }
+      });
+
+      // ToDo: тут логичнее .map вместо .forEach
+      // const list: IGiveItem[] = []
+      // state.coins.forEach((coin: ICoin) => {
+      //   // выбираем из стора только айди и имя монеты
+      //   let url = ''
+      //   // ToDo: тут ошибка в логике, ставь точки с запятой, чтобы визуально легче читалось
+      //   imagesLinks.find((e) => {
+      //     // ищем изображание
+      //     if (e.name === coin.give) {
+      //       url = e.link
+      //     }
+      //   })
+      //   list.push({
+      //     id: coin.id,
+      //     name: coin.give,
+      //     imgUrl: url
+      //   })
+      // })
+      // return list
     },
     activeGiveCoin (state: State): string {
       return state.pair.give
