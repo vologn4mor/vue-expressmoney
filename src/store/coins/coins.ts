@@ -172,7 +172,7 @@ export default {
         return {
           id: coin.id,
           name: coin.give,
-          imgUrl: image?.url ? image.url : ''
+          imgUrl: image?.link ? image.link : ''
         }
       });
 
