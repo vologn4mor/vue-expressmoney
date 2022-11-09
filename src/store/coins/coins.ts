@@ -146,6 +146,8 @@ const imagesLinks = [
 
 const state = {
   coins,
+  // ToDo: когда массив уже есть на момент инициализации стора - это сработает,
+  //  если будешь получать его асинхронным запросом уже после инициализации будет ошибка
   pair: {
     give: coins[0].give,
     isFiat: coins[0].isFiat,
@@ -162,11 +164,15 @@ export default {
   namespaced: true,
   state,
   getters: {
+    // ToDo: по названиям старайся придерживаться одного стиля, а то в одном месте есть префикс гет, в другом нет и т.д.
+    //  Называть можно по разному, но чтобы названия были логичными и отражали суть
     listGiveCoins (state: State) {
+      // ToDo: тут логичнее .map вместо .forEach
       const list: IGiveItem[] = []
       state.coins.forEach((coin: ICoin) => {
         // выбираем из стора только айди и имя монеты
         let url = ''
+        // ToDo: тут ошибка в логике, ставь точки с запятой, чтобы визуально легче читалось
         imagesLinks.find((e) => {
           // ищем изображание
           if (e.name === coin.give) {
@@ -198,9 +204,10 @@ export default {
       state.coins.forEach((coin) => {
         if (coin.give == state.pair.give) {
           result = coin.get.map((data) => {
+            // ToDo: тут ошибка в логике
             let imgUrl = ''
             imagesLinks.find((e) => {
-              // ищем изображание
+              // ищем изображение
               if (e.name === data.name) {
                 imgUrl = e.link
               }
@@ -217,6 +224,10 @@ export default {
   },
   mutations: {
     changeGiveCoin (state: State, id: number) {
+      // ToDo: тут идеологически не правильно. Фильтр возвращает часть массива, как новый массив,
+      //  а ты в обработчике соответствия результату поиска меняешь данные.
+      //  Оно будет работать, но это плохой подход, код получается запутанным,
+      //  потом тяжело будет модифицировать или искать ошибки
       state.coins.filter((coin, idx) => {
         if (coin.id === id) {
           // поиск монеты в стейте и изменения выбранной монеты в паре
@@ -250,6 +261,7 @@ export default {
     },
     changeGetCoin (state: State, name: string) {
       state.pair.get = name
+      // ToDo: .filter с последующим обработчиком, если нашел
       state.coins.forEach((giveCoin) => {
         // поиск в стейте монеты give
         if (giveCoin.give === state.pair.give) {

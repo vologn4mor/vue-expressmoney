@@ -16,6 +16,9 @@
 </template>
 
 <script lang="ts">
+
+// ToDo: орфографическая ошибка Fiveth -> Fifth (в нескольких местах)
+
 import Vue from 'vue'
 import bestchange from '@/assets/images/homeFivethBlock/bestchange.gif'
 import exchangesumo from '@/assets/images/homeFivethBlock/exchangesumo.png'

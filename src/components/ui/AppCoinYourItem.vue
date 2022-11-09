@@ -38,6 +38,7 @@ export default Vue.extend({
       type: String,
       required: true
     },
+    // ToDo: всякие булевы свойства (признаки), логичнее называть соответственно, например, isSelectedCoin
     selectedCoin: {
       type: Boolean,
       required: true
