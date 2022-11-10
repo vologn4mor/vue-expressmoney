@@ -17,11 +17,13 @@ interface IGet {
   rezerv: number
   min: number
   max: number
+  code: string
 }
 
 export default interface ICoin {
   id: number
   give: string
   isFiat: boolean
+  code: string
   get: IGet[]
 }

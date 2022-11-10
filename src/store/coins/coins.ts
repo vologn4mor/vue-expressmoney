@@ -7,10 +7,12 @@ const coins: ICoin[] = [
     id: 1,
     give: 'Bitcoin',
     isFiat: false,
+    code: 'BTC',
     get: [
       {
         name: 'Monobank',
         course: 820959.1751,
+        code: 'UAH',
         rezerv: 30000,
         min: 2500,
         max: 29000
@@ -18,6 +20,7 @@ const coins: ICoin[] = [
       {
         name: 'Oschadbank',
         course: 821000.1751,
+        code: 'UAH',
         rezerv: 50000,
         min: 2500,
         max: 29000
@@ -28,10 +31,12 @@ const coins: ICoin[] = [
     id: 2,
     give: 'Monobank',
     isFiat: true,
+    code: 'UAH',
     get: [
       {
         name: 'Bitcoin',
         course: 820959.1751,
+        code: 'BTC',
         rezerv: 2.5,
         min: 2500,
         max: 29000
@@ -39,6 +44,7 @@ const coins: ICoin[] = [
       {
         name: 'Etherium',
         course: 12345.1751,
+        code: 'ETH',
         rezerv: 50000,
         min: 2500,
         max: 29000
@@ -46,6 +52,7 @@ const coins: ICoin[] = [
       {
         name: 'Tron',
         course: 250.1751,
+        code: 'TRON',
         rezerv: 1000,
         min: 2500,
         max: 29000
@@ -56,10 +63,12 @@ const coins: ICoin[] = [
     id: 3,
     give: 'Oschadbank',
     isFiat: true,
+    code: 'UAH',
     get: [
       {
         name: 'Bitcoin',
         course: 820959.1751,
+        code: 'BTC',
         rezerv: 2.5,
         min: 2500,
         max: 29000
@@ -67,6 +76,7 @@ const coins: ICoin[] = [
       {
         name: 'Etherium',
         course: 12345.1751,
+        code: 'ETH',
         rezerv: 50000,
         min: 2500,
         max: 29000
@@ -74,6 +84,7 @@ const coins: ICoin[] = [
       {
         name: 'Tron',
         course: 250.1751,
+        code: 'TRON',
         rezerv: 1000,
         min: 2500,
         max: 29000
@@ -83,17 +94,20 @@ const coins: ICoin[] = [
   {
     id: 4,
     give: 'Tron',
+    code: 'TRON',
     isFiat: false,
     get: [
       {
         name: 'Monobank',
         course: 250.1751,
+        code: 'UAH',
         rezerv: 30000,
         min: 2500,
         max: 29000
       },
       {
         name: 'Oschadbank',
+        code: 'UAH',
         course: 250.1751,
         rezerv: 50000,
         min: 2500,
@@ -104,11 +118,13 @@ const coins: ICoin[] = [
   {
     id: 5,
     give: 'Etherium',
+    code: 'ETH',
     isFiat: false,
     get: [
       {
         name: 'Monobank',
         course: 12345.1751,
+        code: 'UAH',
         rezerv: 30000,
         min: 2500,
         max: 29000
@@ -116,6 +132,7 @@ const coins: ICoin[] = [
       {
         name: 'Oschadbank',
         course: 12345.1751,
+        code: 'UAH',
         rezerv: 50000,
         min: 2500,
         max: 29000
@@ -150,13 +167,17 @@ const state = {
   //  если будешь получать его асинхронным запросом уже после инициализации будет ошибка
   pair: {
     give: coins[0].give,
+    codeGive: coins[0].code,
     isFiat: coins[0].isFiat,
     get: coins[0].get[0].name,
+    codeGet: coins[0].get[0].code,
     course: coins[0].get[0].course,
     rezerv: coins[0].get[0].rezerv,
     min: coins[0].get[0].min,
     max: coins[0].get[0].max
-  }
+  },
+  sellCoinValue: 0,
+  buyCoinValue: 0
 }
 
 type State = typeof state
@@ -166,35 +187,15 @@ export default {
   getters: {
     // ToDo: по названиям старайся придерживаться одного стиля, а то в одном месте есть префикс гет, в другом нет и т.д.
     //  Называть можно по разному, но чтобы названия были логичными и отражали суть
-    listGiveCoins (state: State) {
+    listSellCoins (state: State) {
       return state.coins.map((coin: ICoin) => {
-        const image = imagesLinks.find((e) => e.name === coin.give);
+        const image = imagesLinks.find((e) => e.name === coin.give)
         return {
           id: coin.id,
           name: coin.give,
           imgUrl: image?.link ? image.link : ''
         }
-      });
-
-      // ToDo: тут логичнее .map вместо .forEach
-      // const list: IGiveItem[] = []
-      // state.coins.forEach((coin: ICoin) => {
-      //   // выбираем из стора только айди и имя монеты
-      //   let url = ''
-      //   // ToDo: тут ошибка в логике, ставь точки с запятой, чтобы визуально легче читалось
-      //   imagesLinks.find((e) => {
-      //     // ищем изображание
-      //     if (e.name === coin.give) {
-      //       url = e.link
-      //     }
-      //   })
-      //   list.push({
-      //     id: coin.id,
-      //     name: coin.give,
-      //     imgUrl: url
-      //   })
-      // })
-      // return list
+      })
     },
     activeGiveCoin (state: State): string {
       return state.pair.give
@@ -208,27 +209,29 @@ export default {
     getIsFiat (state: State) {
       return state.pair.isFiat
     },
-    listGetCoins (state: State) {
-      let result: IGetItem[] = []
-      state.coins.forEach((coin) => {
-        if (coin.give == state.pair.give) {
-          result = coin.get.map((data) => {
-            // ToDo: тут ошибка в логике
-            let imgUrl = ''
-            imagesLinks.find((e) => {
-              // ищем изображение
-              if (e.name === data.name) {
-                imgUrl = e.link
-              }
-            })
-            return {
-              ...data,
-              imgUrl
-            }
-          })
+    getSellCoinValue (state: State) {
+      return state.sellCoinValue
+    },
+    getBuyCoinValue (state: State) {
+      return state.buyCoinValue
+    },
+    getSellImage (state: State) {
+      const image = imagesLinks.find((e) => e.name === state.pair.give)
+      return image?.link
+    },
+    getBuyImage (state: State) {
+      const image = imagesLinks.find((e) => e.name === state.pair.get)
+      return image?.link
+    },
+    listBuyCoins (state: State) {
+      const giveCoin = state.coins.find((coin) => coin.give === state.pair.give)
+      return giveCoin?.get.map((data) => {
+        const image = imagesLinks.find((e) => e.name === data.name)
+        return {
+          ...data,
+          imgUrl: image?.link ? image.link : ''
         }
       })
-      return result
     }
   },
   mutations: {
@@ -237,56 +240,65 @@ export default {
       //  а ты в обработчике соответствия результату поиска меняешь данные.
       //  Оно будет работать, но это плохой подход, код получается запутанным,
       //  потом тяжело будет модифицировать или искать ошибки
-      state.coins.filter((coin, idx) => {
-        if (coin.id === id) {
-          // поиск монеты в стейте и изменения выбранной монеты в паре
-          state.pair.give = coin.give
-          const getCoinsNames: string[] = []
-          coin.get.filter((getCoin) => {
-            getCoinsNames.push(getCoin.name) // получение имен монет и проверка существуют ли они в паре,
-          })
-          if (getCoinsNames.includes(state.pair.get)) {
-            coin.get.filter((getCoin) => {
-              // если существует, проходимся по массиву и обновляем данные, т.к они могут отличаться
-              if (getCoin.name === state.pair.get) {
-                state.pair.course = getCoin.course
-                state.pair.isFiat = coin.isFiat
-                state.pair.max = getCoin.max
-                state.pair.min = getCoin.min
-                state.pair.rezerv = getCoin.rezerv
-              }
-            })
-          } else {
-            // если не существует, выбираем первую монету из доступных для обмена
-            state.pair.get = coin.get[0].name
-            state.pair.course = coin.get[0].course
-            state.pair.isFiat = coin.isFiat
-            state.pair.max = coin.get[0].max
-            state.pair.min = coin.get[0].min
-            state.pair.rezerv = coin.get[0].rezerv
-          }
-        }
-      })
+
+      const giveCoin = state.coins.find((item) => item.id === id) // поиск монеты и ее получение
+      state.pair.give = giveCoin?.give || '' // Присвоение имени в паре
+      const nameCoinsToConvert = giveCoin?.get.map((item) => item.name) // достаем все имена монет, на которые можем поменять
+      const indexGetCoin = nameCoinsToConvert?.findIndex(
+        (item) => item === state.pair.get
+      )
+      if (
+        indexGetCoin != -1 &&
+        typeof indexGetCoin !== 'undefined' &&
+        typeof giveCoin !== 'undefined'
+      ) {
+        // Ищем монету, если она уже была выбрана, то меняем только ее значения
+        state.pair.course = giveCoin.get[indexGetCoin].course
+        state.pair.isFiat = giveCoin.isFiat
+        state.pair.codeGive = giveCoin.code
+        state.pair.max = giveCoin.get[indexGetCoin].max
+        state.pair.min = giveCoin.get[indexGetCoin].min
+        state.pair.rezerv = giveCoin.get[indexGetCoin].rezerv
+      } else if (typeof giveCoin !== 'undefined') {
+        // если нет, то меняем и значения и имя монеты
+        state.pair.get = giveCoin.get[0].name
+        state.pair.codeGet = giveCoin.get[0].code
+        state.pair.course = giveCoin.get[0].course
+        state.pair.isFiat = giveCoin.isFiat
+        state.pair.codeGive = giveCoin.code
+        state.pair.max = giveCoin.get[0].max
+        state.pair.min = giveCoin.get[0].min
+        state.pair.rezerv = giveCoin.get[0].rezerv
+      }
     },
     changeGetCoin (state: State, name: string) {
       state.pair.get = name
-      // ToDo: .filter с последующим обработчиком, если нашел
-      state.coins.forEach((giveCoin) => {
-        // поиск в стейте монеты give
-        if (giveCoin.give === state.pair.give) {
-          // если находим, то ищем монету на которую меняем
-          giveCoin.get.forEach((getCoin) => {
-            if (getCoin.name === name) {
-              // если находим, то меняем данные в pairCoins
-              state.pair.get = getCoin.name
-              state.pair.course = getCoin.course
-              state.pair.max = getCoin.max
-              state.pair.min = getCoin.min
-              state.pair.rezerv = getCoin.rezerv
-            }
-          })
-        }
-      })
+      const giveCoin = state.coins.find(
+        (giveCoin) => giveCoin.give === state.pair.give
+      )
+      const getCoin = giveCoin?.get.find(
+        (getCoin) => getCoin.name === state.pair.get
+      )
+      if (getCoin) {
+        state.pair.get = getCoin.name
+        state.pair.codeGet = getCoin.code
+        state.pair.course = getCoin.course
+        state.pair.max = getCoin.max
+        state.pair.min = getCoin.min
+        state.pair.rezerv = getCoin.rezerv
+      }
+    },
+    changeSellCoinValue (state: State, value: number) {
+      state.sellCoinValue = value
+      state.buyCoinValue = state.pair.isFiat
+        ? value / state.pair.course
+        : value * state.pair.course
+    },
+    changeBuyCoinValue (state: State, value: number) {
+      state.buyCoinValue = value
+      state.sellCoinValue = state.pair.isFiat
+        ? value * state.pair.course
+        : value / state.pair.course
     }
   }
 }

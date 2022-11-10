@@ -7,7 +7,7 @@
             <div class="exchange-block__your-coins">
               <strong class="yours-coins__strong">Вы отдаете</strong>
               <ul>
-                <li v-for="item in listGiveCoins" :key="item.id">
+                <li v-for="item in listSellCoins" :key="item.id">
                   <AppCoinYourItem
                     :id="item.id"
                     :name="item.name"
@@ -39,7 +39,7 @@
                 </div>
               </div>
               <ul>
-                <li v-for="item in listGetCoins" :key="item.name">
+                <li v-for="item in listBuyCoins" :key="item.name">
                   <AppCoinAvailableItem
                     :name="item.name"
                     :imageUrl="item.imgUrl"
@@ -53,7 +53,7 @@
               </ul>
             </div>
           </div>
-          <AppFiatToCrypto :pairCoins="pairCoins" />
+          <AppExchangeBlock :pairCoins="pairCoins" />
         </div>
         <div></div>
       </div>
@@ -74,7 +74,7 @@ import { mapGetters } from 'vuex'
 
 import AppCoinYourItem from '@/components/ui/AppCoinYourItem.vue'
 import AppCoinAvailableItem from '@/components/ui/AppCoinAvailableItem.vue'
-import AppFiatToCrypto from '@/components/AppFiatToCrypto.vue'
+import AppExchangeBlock from '@/components/AppExchangeBlock.vue'
 import AppHomeSecondBlock from '@/components/ui/AppHomeSecondBlock.vue'
 import AppHomeThirdBlock from '@/components/ui/AppHomeThirdBlock.vue'
 import AppHomeFourthBlock from '@/components/ui/AppHomeFourthBlock.vue'
@@ -287,7 +287,7 @@ export default Vue.extend({
   components: {
     AppCoinYourItem,
     AppCoinAvailableItem,
-    AppFiatToCrypto,
+    AppExchangeBlock,
     AppHomeSecondBlock,
     AppHomeThirdBlock,
     AppHomeFourthBlock,
@@ -295,9 +295,9 @@ export default Vue.extend({
   },
   computed: {
     ...mapGetters('coins', [
-      'listGiveCoins',
+      'listSellCoins',
       'activeGiveCoin',
-      'listGetCoins',
+      'listBuyCoins',
       'activeGetCoin',
       'getIsFiat'
     ])
