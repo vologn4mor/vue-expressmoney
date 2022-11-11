@@ -143,8 +143,7 @@
 import Vue from 'vue'
 import liarr from '@/assets/images/liarr.png'
 import ICoin from '@/interfaces/ICoin'
-import { mapGetters, mapMutations, Store } from 'vuex'
-import store from '@/store'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default Vue.extend({
   props: {
@@ -193,18 +192,19 @@ export default Vue.extend({
     },
     buyCoin: {
       get () {
+        // console.log(this.buyCoin)
         return this.getSellCoinValue
       },
       set (value: string) {
-        if (isNaN(parseFloat(value))) {
-          this.changeSellCoinValue(null)
-          this.changeBuyCoinValue(null)
-          return
+        const result = value
+          .replace(/[^0-9,.]/g, ' ')
+          .replace(',', '.')
+          .trim()
+        if (result.length !== value.length) {
+          this.changeBuyCoinValue(0)
         }
-
-        if (value.length) {
-          this.changeSellCoinValue(parseFloat(value))
-        }
+        this.changeSellCoinValue(result)
+        console.log(parseFloat(result))
       }
     },
     sellCoin: {

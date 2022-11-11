@@ -1,7 +1,7 @@
 <template>
   <div
     class="coin"
-    @click="changeGetCoin(name)"
+    @click="changeBuyCoin(name)"
     :class="selectedCoin ? 'selected' : null"
   >
     <div class="coin__block">
@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { mapMutations } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default Vue.extend({
   data () {
@@ -68,7 +68,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    ...mapMutations('coins', ['changeGetCoin'])
+    ...mapActions('coins', ['changeBuyCoin'])
   }
 })
 </script>

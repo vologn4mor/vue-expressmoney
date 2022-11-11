@@ -4,10 +4,12 @@ import coins from './coins/coins'
 
 Vue.use(Vuex)
 
+const state = {}
+
+export const rootState = state
+
 export default new Vuex.Store({
-  state () {
-    return {}
-  },
+  state,
   getters: {},
   mutations: {},
   actions: {},

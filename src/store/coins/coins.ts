@@ -1,7 +1,8 @@
 import ICoin from '@/interfaces/ICoin'
 import IGetItem from '@/interfaces/IGetItem'
 import IGiveItem from '@/interfaces/IGiveItem'
-
+import { ActionContext } from 'vuex'
+import { rootState } from '../index'
 const coins: ICoin[] = [
   {
     id: 1,
@@ -181,6 +182,8 @@ const state = {
 }
 
 type State = typeof state
+type RootState = typeof rootState
+
 export default {
   namespaced: true,
   state,
@@ -286,6 +289,7 @@ export default {
         state.pair.max = getCoin.max
         state.pair.min = getCoin.min
         state.pair.rezerv = getCoin.rezerv
+        // this.changeBuyCoinValue(state, state.sellCoinValue)
       }
     },
     changeSellCoinValue (state: State, value: number) {
@@ -299,6 +303,16 @@ export default {
       state.sellCoinValue = state.pair.isFiat
         ? value * state.pair.course
         : value / state.pair.course
+    }
+  },
+  actions: {
+    changeBuyCoin (context: ActionContext<State, RootState>, name: string) {
+      context.commit('changeGetCoin', name)
+      context.commit('changeSellCoinValue', context.state.sellCoinValue)
+    },
+    changeSellCoin (context: ActionContext<State, RootState>, id: number) {
+      context.commit('changeGiveCoin', id)
+      context.commit('changeBuyCoinValue', 0)
     }
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <div
     class="coin"
-    @click="changeGiveCoin(id)"
+    @click="changeSellCoin(id)"
     :class="selectedCoin ? 'selected' : null"
   >
     <div class="coin__block">
@@ -17,7 +17,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import Arrow from '@/assets/images/h_arr.png'
-import { mapMutations } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default Vue.extend({
   data () {
@@ -45,10 +45,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    ...mapMutations('coins', ['changeGiveCoin']),
-    clickHandler () {
-      console.log(this.id)
-    }
+    ...mapActions('coins', ['changeSellCoin'])
   }
 })
 </script>
