@@ -199,6 +199,7 @@ export default Vue.extend({
         const result = value
           .replace(/[^0-9,.]/g, ' ')
           .replace(',', '.')
+          .replace(/\.\d+\.$/g, '')
           .trim()
         if (result.length !== value.length) {
           this.changeBuyCoinValue(0)
@@ -212,15 +213,26 @@ export default Vue.extend({
         return this.getBuyCoinValue
       },
       set (value: string) {
-        if (isNaN(parseFloat(value))) {
-          this.changeSellCoinValue(null)
-          this.changeBuyCoinValue(null)
-          return
+        const result = value
+          .replace(/[^0-9,.]/g, ' ')
+          .replace(',', '.')
+          .replace(/\.\d+\.$/g, '')
+          .trim()
+        if (result.length !== value.length) {
+          this.changeSellCoinValue(0)
         }
+        this.changeBuyCoinValue(result)
+        console.log(parseFloat(result))
 
-        if (value.length) {
-          this.changeBuyCoinValue(parseFloat(value))
-        }
+        // if (isNaN(parseFloat(value))) {
+        //   this.changeSellCoinValue(null)
+        //   this.changeBuyCoinValue(null)
+        //   return
+        // }
+
+        // if (value.length) {
+        //   this.changeBuyCoinValue(parseFloat(value))
+        // }
       }
     }
   }
