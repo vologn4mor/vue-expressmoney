@@ -197,6 +197,7 @@ export default Vue.extend({
       },
       set (value: string) {
         const result = value
+          .replace(/^[\.,]+/g, '')
           .replace(/[^0-9,.]/g, ' ')
           .replace(',', '.')
           .replace(/\.\d+\.$/g, '')
@@ -214,6 +215,7 @@ export default Vue.extend({
       },
       set (value: string) {
         const result = value
+          .replace(/^[\.,]+/g, '')
           .replace(/[^0-9,.]/g, ' ')
           .replace(',', '.')
           .replace(/\.\d+\.$/g, '')
