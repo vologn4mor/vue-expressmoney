@@ -192,8 +192,7 @@ export default Vue.extend({
     },
     buyCoin: {
       get () {
-        // console.log(this.buyCoin)
-        return this.getSellCoinValue
+        return Intl.NumberFormat().format(this.getSellCoinValue)
       },
       set (value: string) {
         const result = value
@@ -201,6 +200,7 @@ export default Vue.extend({
           .replace(/[^0-9,.]/g, ' ')
           .replace(',', '.')
           .replace(/\.\d+\.$/g, '')
+          .replace(/\s/g, '')
           .trim()
         if (result.length !== value.length) {
           this.changeBuyCoinValue(0)
@@ -211,7 +211,10 @@ export default Vue.extend({
     },
     sellCoin: {
       get () {
-        return this.getBuyCoinValue
+        // return this.getBuyCoinValue
+        return Intl.NumberFormat(undefined, {
+          maximumFractionDigits: this.getPair.isFiat ? 6 : 2
+        }).format(this.getBuyCoinValue)
       },
       set (value: string) {
         const result = value
@@ -219,6 +222,7 @@ export default Vue.extend({
           .replace(/[^0-9,.]/g, ' ')
           .replace(',', '.')
           .replace(/\.\d+\.$/g, '')
+          .replace(/\s/g, '')
           .trim()
         if (result.length !== value.length) {
           this.changeSellCoinValue(0)
