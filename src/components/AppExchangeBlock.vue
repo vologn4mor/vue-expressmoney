@@ -49,7 +49,7 @@
           {{ getPair.codeGet }}
           <a href="">Не хватает?</a>
         </p>
-        <form>
+        <form @submit.prevent>
           <div>
             <div class="your-coin">
               <img :src="getSellImage" alt="your-coin" />
@@ -192,13 +192,21 @@ export default Vue.extend({
     },
     buyCoin: {
       get () {
-        return Intl.NumberFormat().format(this.getSellCoinValue)
+        return this.getSellCoinValue
+        // const number = Number(this.getSellCoinValue)
+        // if (!Number.isInteger(number)) {
+        //   return number.toFixed(this.getPair.isFiat ? 2 : 6)
+        // } else {
+        //   return number
+        // }
+        // return Intl.NumberFormat().format(this.getSellCoinValue)
       },
       set (value: string) {
         const result = value
           .replace(/^[\.,]+/g, '')
           .replace(/[^0-9,.]/g, ' ')
           .replace(',', '.')
+          .replace(/\.{2}/g, '.')
           .replace(/\.\d+\.$/g, '')
           .replace(/\s/g, '')
           .trim()
@@ -211,16 +219,20 @@ export default Vue.extend({
     },
     sellCoin: {
       get () {
-        // return this.getBuyCoinValue
-        return Intl.NumberFormat(undefined, {
-          maximumFractionDigits: this.getPair.isFiat ? 6 : 2
-        }).format(this.getBuyCoinValue)
+        return this.getBuyCoinValue
+        // const number = Number(this.getBuyCoinValue)
+        // if(!Number.isInteger(number)) {
+        //   return number.toFixed(this.getPair.isFiat ? 6 : 2)
+        // } else {
+        //   return number
+        // }
       },
       set (value: string) {
         const result = value
           .replace(/^[\.,]+/g, '')
           .replace(/[^0-9,.]/g, ' ')
           .replace(',', '.')
+          .replace(/\.{2}/g, '.')
           .replace(/\.\d+\.$/g, '')
           .replace(/\s/g, '')
           .trim()
@@ -229,16 +241,6 @@ export default Vue.extend({
         }
         this.changeBuyCoinValue(result)
         console.log(parseFloat(result))
-
-        // if (isNaN(parseFloat(value))) {
-        //   this.changeSellCoinValue(null)
-        //   this.changeBuyCoinValue(null)
-        //   return
-        // }
-
-        // if (value.length) {
-        //   this.changeBuyCoinValue(parseFloat(value))
-        // }
       }
     }
   }
