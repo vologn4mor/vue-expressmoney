@@ -251,7 +251,7 @@ export default {
         (item) => item === state.pair.get
       )
       if (
-        indexGetCoin != -1 &&
+        indexGetCoin !== -1 &&
         typeof indexGetCoin !== 'undefined' &&
         typeof giveCoin !== 'undefined'
       ) {
@@ -295,14 +295,14 @@ export default {
     changeSellCoinValue (state: State, value: number) {
       state.sellCoinValue = value
       state.buyCoinValue = state.pair.isFiat
-        ? value / state.pair.course
-        : value * state.pair.course
+        ? parseFloat((value / state.pair.course).toFixed(2))
+        : parseFloat((value * state.pair.course).toFixed(2))
     },
     changeBuyCoinValue (state: State, value: number) {
       state.buyCoinValue = value
       state.sellCoinValue = state.pair.isFiat
-        ? value * state.pair.course
-        : value / state.pair.course
+        ? parseFloat((value * state.pair.course).toFixed(6))
+        : parseFloat((value * state.pair.course).toFixed(6))
     }
   },
   actions: {

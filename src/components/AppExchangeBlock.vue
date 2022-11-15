@@ -193,16 +193,34 @@ export default Vue.extend({
     buyCoin: {
       get () {
         return this.getSellCoinValue
+
+        // const number = Number(this.getSellCoinValue)
+        // if(!Number.isInteger(number)) {
+        //   return number.toFixed(this.getPair.isFiat ? 6 : 2).toString()
+        // } else {
+        //   return number
+        // }
+
         // const number = Number(this.getSellCoinValue)
         // if (!Number.isInteger(number)) {
         //   return number.toFixed(this.getPair.isFiat ? 2 : 6)
+        //     .toString()
+        //     .replace(/^[\.,]+/g, '')
+        //     .replace(/[^0-9,.]/g, ' ')
+        //     .replace(',', '.')
+        //     .replace(/\.{2}/g, '.')
+        //     .replace(/\.\d+\.$/g, '')
+        //     .replace(/\s/g, '')
+        //     .replace(/0+$/g, '')
+        //     .trim()
+          
         // } else {
         //   return number
         // }
         // return Intl.NumberFormat().format(this.getSellCoinValue)
       },
       set (value: string) {
-        const result = value
+        var result = value
           .replace(/^[\.,]+/g, '')
           .replace(/[^0-9,.]/g, ' ')
           .replace(',', '.')
