@@ -5,22 +5,22 @@
       <div class="main-block flex">
         <div class="sell-block">
           <p class="text">ОТПРАВЛЯЕТЕ</p>
-          <div class="send-coin-block flex" v-if="!isSelectSellCoin">
-            <input type="text" class="send-coin-input" v-model="buyCoin">
-            <div class="send-coin-select flex" @click="isSelectSellCoin = !isSelectSellCoin" >
+          <div class="coin-block flex" v-if="!isSelectSellCoin">
+            <input type="text" class="coin-input" v-model="buyCoin">
+            <div class="coin-select flex" @click="isSelectSellCoin = !isSelectSellCoin" >
               <div class="arrow"></div>
               <p class="code-text">{{getPair.codeGive}}</p>
               <img :src="getSellImage" alt="" class="coin-icon">
             </div>
           </div>
           <div class="select-coin" v-else>
-            <div class="send-coin-block flex">
+            <div class="coin-block flex">
               <input
                 type="text"
-                class="send-coin-input right"
+                class="coin-input right"
                 placeholder="type a currency"
               >
-              <div class="send-coin-select flex" @click="isSelectSellCoin = !isSelectSellCoin">
+              <div class="coin-select flex" @click="isSelectSellCoin = !isSelectSellCoin">
                 <img :src="SearchIcon" alt="" class="coin-icon">
                 <div class="arrow"></div>
               </div>
@@ -40,23 +40,23 @@
         </div>
         <div class="buy-block">
           <p class="text">ПОЛУЧАЕТЕ</p>
-          <div class="send-coin-select">
-            <div class="send-coin-block flex" v-if="!isSelectBuyCoin">
+          <div class="coin-select">
+            <div class="coin-block flex reverse" v-if="!isSelectBuyCoin">
               <input
                 type="text"
-                class="send-coin-input"
+                class="coin-input"
                 v-model="sellCoin"
               >
-              <div class="send-coin-select flex" @click="isSelectBuyCoin = !isSelectBuyCoin" >
+              <div class="coin-select flex reverse" @click="isSelectBuyCoin = !isSelectBuyCoin" >
                 <div class="arrow"></div>
                 <p class="code-text">{{getPair.codeGet}}</p>
                 <img :src="getBuyImage" alt="" class="coin-icon">
               </div>
             </div>
             <div class="select-coin" v-else>
-              <div class="send-coin-block flex">
-                <input type="text" class="send-coin-input right" placeholder="type a currency">
-                <div class="send-coin-select flex" @click="isSelectBuyCoin = !isSelectBuyCoin">
+              <div class="coin-block flex reverse">
+                <input type="text" class="coin-input" placeholder="type a currency">
+                <div class="coin-select flex" @click="isSelectBuyCoin = !isSelectBuyCoin">
                   <img :src="SearchIcon" alt="" class="coin-icon">
                   <div class="arrow"></div>
                 </div>
@@ -214,13 +214,13 @@ export default Vue.extend({
     border: 5px solid transparent; border-top: 5px solid lightgray;
     margin-top: 5px;
   }
-  .send-coin-select {
+  .coin-select {
     align-items: center;
   }
-  .send-coin-select:hover {
+  .coin-select:hover {
     cursor: pointer;
   }
-  .send-coin-block {
+  .coin-block {
     border-bottom-width: 2px;
     border-bottom-style: solid;
     border-bottom-color: lightgray;
@@ -236,31 +236,35 @@ export default Vue.extend({
   }
   .img-list {
     width: 30px;
+    padding-right: 5px;
   }
   .li-list {
     display: flex;
     align-items: center;
-    padding-bottom: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #6377f7;
   }
   .li-list:hover {
     cursor: pointer;
     color: #1976d2;
   }
   .ul-list {
-    background-color: lightgray;
+    background-color: white;
     position: absolute;
     overflow: hidden;
-    height: 100px;
+    max-height: 200px;
+    height: fit-content;
     overflow-y: scroll;
     width: 310px;
+    padding: 10px;
   }
   .text {
     text-align: center;
   }
-  .ul-list::-webkit-scrollbar {
-    width: 10px;
-    background-color: #f9f9fd;
-  }
+  //.ul-list::-webkit-scrollbar {
+  //  width: 10px;
+  //  background-color: #f9f9fd;
+  //}
   .double-arrows {
     width: 39px;
     height: 39px;
@@ -268,5 +272,8 @@ export default Vue.extend({
   }
   .code-text {
     margin: 0 5px;
+  }
+  .reverse {
+    flex-direction: row-reverse;
   }
 </style>
