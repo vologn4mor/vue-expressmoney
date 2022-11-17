@@ -2,62 +2,62 @@
   <div>
     <div class="template">
       <div class="home-block content">
-        <div class="exchange-block">
-          <div class="exchange-block__all-coins">
-            <div class="exchange-block__your-coins">
-              <strong class="yours-coins__strong">Вы отдаете</strong>
-              <ul>
-                <li v-for="item in listSellCoins" :key="item.id">
-                  <AppCoinYourItem
-                    :id="item.id"
-                    :name="item.name"
-                    :imgUrl="item.imgUrl"
-                    :selectedCoin="item.name === activeGiveCoin"
-                  />
-                </li>
-              </ul>
-            </div>
-            <div class="exchange-block__available-coins">
-              <div class="flex available-coins__container">
-                <strong class="available-coins__strong">Вы получаете</strong>
-                <div class="flex available-coins__buttons">
-                  <div
-                    class="available-coins__button"
-                    :class="{ 'available-coins__active': isSelectedCourse }"
-                    @click="isSelectedCourse = true"
-                  >
-                    курс
-                  </div>
-                  &nbsp;
-                  <div
-                    class="available-coins__button"
-                    :class="!isSelectedCourse ? 'available-coins__active' : ''"
-                    @click="isSelectedCourse = false"
-                  >
-                    резерв
-                  </div>
-                </div>
-              </div>
-              <ul>
-                <li v-for="item in listBuyCoins" :key="item.name">
-                  <AppCoinAvailableItem
-                    :name="item.name"
-                    :imageUrl="item.imgUrl"
-                    :rezerv="item.rezerv"
-                    :isSelectedCourse="isSelectedCourse"
-                    :selectedCoin="item.name === activeGetCoin"
-                    :course="item.course"
-                    :isFiat="getIsFiat"
-                  />
-                </li>
-              </ul>
-            </div>
+<!--        <div class="exchange-block">-->
+<!--          <div class="exchange-block__all-coins">-->
+            <AppConvertBlock/>
+<!--            <div class="exchange-block__your-coins">-->
+<!--              <strong class="yours-coins__strong">Вы отдаете</strong>-->
+<!--              <ul>-->
+<!--                <li v-for="item in listSellCoins" :key="item.id">-->
+<!--                  <AppCoinYourItem-->
+<!--                    :id="item.id"-->
+<!--                    :name="item.name"-->
+<!--                    :imgUrl="item.imgUrl"-->
+<!--                    :selectedCoin="item.name === activeGiveCoin"-->
+<!--                  />-->
+<!--                </li>-->
+<!--              </ul>-->
+<!--            </div>-->
+<!--            <div class="exchange-block__available-coins">-->
+<!--              <div class="flex available-coins__container">-->
+<!--                <strong class="available-coins__strong">Вы получаете</strong>-->
+<!--                <div class="flex available-coins__buttons">-->
+<!--                  <div-->
+<!--                    class="available-coins__button"-->
+<!--                    :class="{ 'available-coins__active': isSelectedCourse }"-->
+<!--                    @click="isSelectedCourse = true"-->
+<!--                  >-->
+<!--                    курс-->
+<!--                  </div>-->
+<!--                  &nbsp;-->
+<!--                  <div-->
+<!--                    class="available-coins__button"-->
+<!--                    :class="!isSelectedCourse ? 'available-coins__active' : ''"-->
+<!--                    @click="isSelectedCourse = false"-->
+<!--                  >-->
+<!--                    резерв-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <ul>-->
+<!--                <li v-for="item in listBuyCoins" :key="item.name">-->
+<!--                  <AppCoinAvailableItem-->
+<!--                    :name="item.name"-->
+<!--                    :imageUrl="item.imgUrl"-->
+<!--                    :rezerv="item.rezerv"-->
+<!--                    :isSelectedCourse="isSelectedCourse"-->
+<!--                    :selectedCoin="item.name === activeGetCoin"-->
+<!--                    :course="item.course"-->
+<!--                    :isFiat="getIsFiat"-->
+<!--                  />-->
+<!--                </li>-->
+<!--              </ul>-->
+<!--            </div>-->
           </div>
-          <AppExchangeBlock :pairCoins="pairCoins" />
+<!--          <AppExchangeBlock :pairCoins="pairCoins" />-->
         </div>
-        <div></div>
-      </div>
-    </div>
+<!--      </div>-->
+<!--    </div>-->
     <AppHomeSecondBlock />
     <!-- <AppHomeThirdBlock
       :lastReviews="threeLastFakeReviews"
@@ -79,6 +79,7 @@ import AppHomeSecondBlock from '@/components/ui/AppHomeSecondBlock.vue'
 import AppHomeThirdBlock from '@/components/ui/AppHomeThirdBlock.vue'
 import AppHomeFourthBlock from '@/components/ui/AppHomeFourthBlock.vue'
 import AppHomeFivethBlock from '@/components/ui/AppHomeFivethBlock.vue'
+import AppConvertBlock from "@/components/AppConvertBlock.vue";
 
 import liarr from '@/assets/images/liarr.png'
 import Bitcoin from '@/assets/images/coins/Bitcoin.png'
@@ -213,7 +214,7 @@ const getDirections = [
 ]
 
 export default Vue.extend({
-  name: 'Home',
+  name: 'AppHome',
   data () {
     return {
       myCoin: {} as ICoin,
@@ -228,62 +229,6 @@ export default Vue.extend({
       threeLastFakeReviews
     }
   },
-  methods: {
-    // selectYourCoin (id: number): void {
-    //   ToDo: .filter или .forEach
-    //   let mappedCoins = this.fakeCoins.map(el => ({
-    //     ...el,
-    //     _isFiatStr: el.isFiat ? 'это фиат' : 'это не фиат'
-    //   }));
-    //   mappedCoin
-    //   this.fakeCoins.map((coin) => {
-    //     if (coin.id == id) {
-    //       if (this.myCoin.isFiat != coin.isFiat) {
-    //         // обнуление списка доступных монет при выборе своих монет
-    //         this.fakeConvertCoins = []
-    //         this.refreshConvertList()
-    //       }
-    //       this.convertCoin = {} as ICoin
-    //       this.myCoin = coin
-    //     }
-    //   })
-    // },
-    // selectAvailableCoin (id: number) {
-    //   this.pairCoins = []
-    //   this.fakeConvertCoins.map((coin) => {
-    //     if (coin.id == id) {
-    //       this.convertCoin = coin
-    //     }
-    //   })
-    //   this.pairCoins.push(this.myCoin, this.convertCoin)
-    // },
-    // refreshConvertList (): void {
-    //   this.fakeCoins.map((coin) => {
-    //     if (coin.isFiat == this.myCoin.isFiat) {
-    //       this.fakeConvertCoins.push(coin)
-    //     }
-    //   })
-    // }
-  },
-  beforeMount () {
-    // установка при открытии сайта значений по дефолту
-    // this.fakeCoins.map((coin) => {
-    //   if (coin.name == 'Monobank') {
-    //     this.myCoin = coin
-    //   }
-    // })
-    // this.fakeCoins.map((coin) => {
-    //   if (coin.isFiat != this.myCoin.isFiat) {
-    //     this.fakeConvertCoins.push(coin)
-    //   }
-    // })
-    // this.fakeConvertCoins.map((coin) => {
-    //   if (coin.name == 'BTC') {
-    //     this.convertCoin = coin
-    //   }
-    // })
-    // this.pairCoins.push(this.myCoin, this.convertCoin)
-  },
   components: {
     AppCoinYourItem,
     AppCoinAvailableItem,
@@ -291,7 +236,8 @@ export default Vue.extend({
     AppHomeSecondBlock,
     AppHomeThirdBlock,
     AppHomeFourthBlock,
-    AppHomeFivethBlock
+    AppHomeFivethBlock,
+    AppConvertBlock
   },
   computed: {
     ...mapGetters('coins', [

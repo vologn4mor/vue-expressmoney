@@ -235,7 +235,7 @@ export default {
           imgUrl: image?.link ? image.link : ''
         }
       })
-    }
+    },
   },
   mutations: {
     changeGiveCoin (state: State, id: number) {
@@ -295,14 +295,14 @@ export default {
     changeSellCoinValue (state: State, value: number) {
       state.sellCoinValue = value
       state.buyCoinValue = state.pair.isFiat
-        ? parseFloat((value / state.pair.course).toFixed(2))
+        ? parseFloat((value / state.pair.course).toFixed(6))
         : parseFloat((value * state.pair.course).toFixed(2))
     },
     changeBuyCoinValue (state: State, value: number) {
       state.buyCoinValue = value
       state.sellCoinValue = state.pair.isFiat
-        ? parseFloat((value * state.pair.course).toFixed(6))
-        : parseFloat((value * state.pair.course).toFixed(6))
+        ? parseFloat((value * state.pair.course).toFixed(2))
+        : parseFloat((value / state.pair.course).toFixed(6))
     }
   },
   actions: {
@@ -312,7 +312,19 @@ export default {
     },
     changeSellCoin (context: ActionContext<State, RootState>, id: number) {
       context.commit('changeGiveCoin', id)
-      context.commit('changeBuyCoinValue', 0)
+      context.commit('changeSellCoinValue', context.state.sellCoinValue)
+    },
+    invertPairCoins (context: ActionContext<State, RootState>) {
+      const getCoin = context.state.pair.get
+      const giveCoin = context.state.pair.give
+      const give = context.state.coins.find(item => item.give === getCoin)
+      context.commit('changeGiveCoin', give?.id)
+      const get = give?.get.find(item => item.name === giveCoin)
+      context.commit('changeGetCoin', get?.name)
+      context.commit('changeBuyCoinValue', context.state.sellCoinValue)
     }
   }
 }
+// monobank - btc
+// btc - monobank
+// find btc - changeGivecoin(btc.id) - find monobank - changeGetcoin(monobank)
