@@ -178,7 +178,8 @@ const state = {
     max: coins[0].get[0].max
   },
   sellCoinValue: 0,
-  buyCoinValue: 0
+  buyCoinValue: 0,
+  accountNumber: ''
 }
 
 type State = typeof state
@@ -236,6 +237,9 @@ export default {
         }
       })
     },
+    getAccountNumber (state: State) {
+      return state.accountNumber
+    }
   },
   mutations: {
     changeGiveCoin (state: State, id: number) {
@@ -303,18 +307,24 @@ export default {
       state.sellCoinValue = state.pair.isFiat
         ? parseFloat((value * state.pair.course).toFixed(2))
         : parseFloat((value / state.pair.course).toFixed(6))
+    },
+    changeAccountNumber (state: State, value: string) {
+      state.accountNumber = value
     }
   },
   actions: {
     changeBuyCoin (context: ActionContext<State, RootState>, name: string) {
+      context.commit('changeAccountNumber', '')
       context.commit('changeGetCoin', name)
       context.commit('changeSellCoinValue', context.state.sellCoinValue)
     },
     changeSellCoin (context: ActionContext<State, RootState>, id: number) {
+      context.commit('changeAccountNumber', '')
       context.commit('changeGiveCoin', id)
       context.commit('changeSellCoinValue', context.state.sellCoinValue)
     },
     invertPairCoins (context: ActionContext<State, RootState>) {
+      context.commit('changeAccountNumber', '')
       const getCoin = context.state.pair.get
       const giveCoin = context.state.pair.give
       const give = context.state.coins.find(item => item.give === getCoin)

@@ -74,6 +74,18 @@
           </div>
         </div>
       </div>
+      <div class="check-block">
+        <input
+          type="text"
+          class="check-input"
+          v-model="checkValue"
+          :placeholder="
+            getPair.isFiat ?
+            `Ваш ${getPair.get} адрес` :
+            `Номер карты ${getPair.get}`"
+        >
+        <button class="btn-submit">Начать обмен</button>
+      </div>
     </AppCard>
   </div>
 </template>
@@ -107,7 +119,8 @@ export default Vue.extend({
       changeGiveCoin: 'changeGiveCoin',
       changeGetCoin: 'changeGetCoin',
       changeBuyCoinValue: 'changeBuyCoinValue',
-      changeSellCoinValue: 'changeSellCoinValue'
+      changeSellCoinValue: 'changeSellCoinValue',
+      changeAccountNumber: 'changeAccountNumber'
     }),
     ...mapActions('coins', {
       invertPairCoins: 'invertPairCoins',
@@ -115,24 +128,21 @@ export default Vue.extend({
       changeBuyCoin: 'changeBuyCoin'
     }),
     changeSellCoin (id : number) {
-      // this.changeGiveCoin(id)
-      // this.isSelectSellCoin = false
       this.$store.dispatch('coins/changeSellCoin', id)
-      // this.changeSellCoin()
       this.$data.isSelectSellCoin = false
     },
     changeBuyCoin (name: string) {
-      // this.changeGetCoin(name)
-      // this.isSelectBuyCoin = false
       this.$store.dispatch('coins/changeBuyCoin', name)
       this.$data.isSelectBuyCoin = false
     },
     invertBuy () {
       this.$data.isSelectBuyCoin = !this.$data.isSelectBuyCoin
+      this.$data.searchListBuyCoin = ''
       this.$data.isSelectSellCoin = false
     },
     invertSell () {
       this.$data.isSelectSellCoin = !this.$data.isSelectSellCoin
+      this.$data.searchListSellCoin = ''
       this.$data.isSelectBuyCoin = false
     }
   },
@@ -144,7 +154,8 @@ export default Vue.extend({
       listSellCoins: 'listSellCoins',
       listBuyCoins: 'listBuyCoins',
       getSellCoinValue: 'getSellCoinValue',
-      getBuyCoinValue: 'getBuyCoinValue'
+      getBuyCoinValue: 'getBuyCoinValue',
+      getAccountNumber: 'getAccountNumber'
     }),
     buyCoin: {
       get () {
@@ -188,6 +199,26 @@ export default Vue.extend({
         this.$store.commit('coins/changeBuyCoinValue', result)
       }
     },
+    checkValue: {
+      get () {
+        if (this.getAccountNumber.length > 4 && !this.getPair.isFiat) {
+          return this.getAccountNumber.match(/\d{1,4}/g).join(' ')
+        } else {
+          return this.getAccountNumber
+        }
+      },
+      set (value: string) {
+        const trimedValue = value
+          .replace(/[^0-9]/g, '')
+          .trim()
+          .substring(0, 16)
+        this.$store.commit('coins/changeAccountNumber', trimedValue)
+        if (trimedValue.length !== value.length) {
+          this.$store.commit('coins/changeAccountNumber', 0)
+        }
+        this.$store.commit('coins/changeAccountNumber', trimedValue)
+      }
+    },
     filteredListSellCoin: function () {
       const searchWord = this.$data.searchListSellCoin
       return this.listSellCoins.filter(function (elem : any) {
@@ -214,6 +245,8 @@ export default Vue.extend({
       if (clicksArr.indexOf($event.target.className) === -1) {
         vm.isSelectSellCoin = false
         vm.isSelectBuyCoin = false
+        vm.searchListBuyCoin = ''
+        vm.searchListSellCoin = ''
       }
     })
   }
@@ -224,9 +257,6 @@ export default Vue.extend({
   input {
     outline:none;
     width: 100%;
-        //border-bottom-width: 2px;
-        //border-bottom-style: solid;
-        //border-bottom-color: lightgray;
   }
   .flex {
     display: flex;
@@ -278,7 +308,7 @@ export default Vue.extend({
     display: flex;
     align-items: center;
     padding: 10px;
-    border-bottom: 1px solid #6377f7;
+    border-bottom: 1px solid lightgray;
   }
   .li-list:hover {
     cursor: pointer;
@@ -297,10 +327,6 @@ export default Vue.extend({
   .text {
     text-align: center;
   }
-  //.ul-list::-webkit-scrollbar {
-  //  width: 10px;
-  //  background-color: #f9f9fd;
-  //}
   .double-arrows {
     width: 39px;
     height: 39px;
@@ -311,5 +337,24 @@ export default Vue.extend({
   }
   .reverse {
     flex-direction: row-reverse;
+  }
+  .check-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .check-input {
+    width: 300px;
+    margin: 10px 0;
+  }
+  .btn-submit, .check-input {
+    border: 2px solid lightgray;
+    border-radius: 5px;
+    padding: 10px 20px;
+  }
+  .btn-submit:hover{
+    color: #fff;
+    background-color: #1976d2;
+    border-color: #1976d2;
   }
 </style>
