@@ -7,7 +7,7 @@
           <p class="text">ОТПРАВЛЯЕТЕ</p>
           <div class="coin-block flex" v-if="!isSelectSellCoin">
             <input type="text" class="coin-input" v-model="buyCoin">
-            <div class="coin-select flex" @click="isSelectSellCoin = !isSelectSellCoin" >
+            <div class="coin-select flex" @click="invertSell" >
               <div class="arrow"></div>
               <p class="code-text">{{getPair.codeGive}}</p>
               <img :src="getSellImage" alt="" class="coin-icon">
@@ -19,15 +19,16 @@
                 type="text"
                 class="coin-input right"
                 placeholder="type a currency"
+                v-model="searchListSellCoin"
               >
-              <div class="coin-select flex" @click="isSelectSellCoin = !isSelectSellCoin">
+              <div class="coin-select flex" @click="invertSell">
                 <img :src="SearchIcon" alt="" class="coin-icon">
                 <div class="arrow"></div>
               </div>
             </div>
             <div class="select-coin-list">
               <ul class="ul-list">
-                <li v-for="item in listSellCoins" class="li-list" :key="item.id" @click="changeSellCoin(item.id)">
+                <li v-for="item in filteredListSellCoin" class="li-list" :key="item.id" @click="changeSellCoin(item.id)">
                   <img :src="item.imgUrl" class="img-list"/>
                   {{item.name}}
                 </li>
@@ -47,7 +48,7 @@
                 class="coin-input"
                 v-model="sellCoin"
               >
-              <div class="coin-select flex reverse" @click="isSelectBuyCoin = !isSelectBuyCoin" >
+              <div class="coin-select flex reverse" @click="invertBuy" >
                 <div class="arrow"></div>
                 <p class="code-text">{{getPair.codeGet}}</p>
                 <img :src="getBuyImage" alt="" class="coin-icon">
@@ -55,15 +56,15 @@
             </div>
             <div class="select-coin" v-else>
               <div class="coin-block flex reverse">
-                <input type="text" class="coin-input" placeholder="type a currency">
-                <div class="coin-select flex" @click="isSelectBuyCoin = !isSelectBuyCoin">
+                <input type="text" class="coin-input" placeholder="type a currency" v-model="searchListBuyCoin">
+                <div class="coin-select flex" @click="invertBuy">
                   <img :src="SearchIcon" alt="" class="coin-icon">
                   <div class="arrow"></div>
                 </div>
               </div>
               <div class="select-coin-list">
                 <ul class="ul-list">
-                  <li v-for="item in listBuyCoins" class="li-list" :key="item.name" @click="changeBuyCoin(item.name)">
+                  <li v-for="item in filteredListBuyCoin" class="li-list" :key="item.name" @click="changeBuyCoin(item.name)">
                     <img :src="item.imgUrl" class="img-list"/>
                     {{item.name}}
                   </li>
@@ -96,7 +97,9 @@ export default Vue.extend({
       SearchIcon,
       DoubleArrows,
       isSelectSellCoin: false,
-      isSelectBuyCoin: false
+      isSelectBuyCoin: false,
+      searchListSellCoin: '',
+      searchListBuyCoin: ''
     }
   },
   methods: {
@@ -122,6 +125,14 @@ export default Vue.extend({
       // this.changeGetCoin(name)
       // this.isSelectBuyCoin = false
       this.$store.dispatch('coins/changeBuyCoin', name)
+      this.$data.isSelectBuyCoin = false
+    },
+    invertBuy () {
+      this.$data.isSelectBuyCoin = !this.$data.isSelectBuyCoin
+      this.$data.isSelectSellCoin = false
+    },
+    invertSell () {
+      this.$data.isSelectSellCoin = !this.$data.isSelectSellCoin
       this.$data.isSelectBuyCoin = false
     }
   },
@@ -176,10 +187,35 @@ export default Vue.extend({
         // this.changeBuyCoinValue(result)
         this.$store.commit('coins/changeBuyCoinValue', result)
       }
+    },
+    filteredListSellCoin: function () {
+      const searchWord = this.$data.searchListSellCoin
+      return this.listSellCoins.filter(function (elem : any) {
+        if (searchWord === '') return true
+        // else return elem.name.indexOf(searchWord) > -1
+        return elem.name.toLowerCase().indexOf(searchWord.toLowerCase()) > -1
+      })
+    },
+    filteredListBuyCoin: function () {
+      const searchWord = this.$data.searchListBuyCoin
+      return this.listBuyCoins.filter(function (elem : any) {
+        if (searchWord === '') return true
+        return elem.name.toLowerCase().indexOf(searchWord.toLowerCase()) > -1
+      })
     }
   },
   components: {
     AppCard
+  },
+  created () {
+    const vm = this.$data
+    document.addEventListener('click', function ($event: any) {
+      const clicksArr = ['arrow', 'coin-icon', 'code-text', 'select-coin-list', 'coin-input right', 'coin-input']
+      if (clicksArr.indexOf($event.target.className) === -1) {
+        vm.isSelectSellCoin = false
+        vm.isSelectBuyCoin = false
+      }
+    })
   }
 })
 </script>
