@@ -175,7 +175,8 @@ const state = {
     course: coins[0].get[0].course,
     rezerv: coins[0].get[0].rezerv,
     min: coins[0].get[0].min,
-    max: coins[0].get[0].max
+    max: coins[0].get[0].max,
+    isLastChangedSellCoin: true
   },
   sellCoinValue: 0,
   buyCoinValue: 0,
@@ -297,12 +298,14 @@ export default {
       }
     },
     changeSellCoinValue (state: State, value: number) {
+      state.pair.isLastChangedSellCoin = true
       state.sellCoinValue = value
       state.buyCoinValue = state.pair.isFiat
         ? parseFloat((value / state.pair.course).toFixed(6))
         : parseFloat((value * state.pair.course).toFixed(2))
     },
     changeBuyCoinValue (state: State, value: number) {
+      state.pair.isLastChangedSellCoin = false
       state.buyCoinValue = value
       state.sellCoinValue = state.pair.isFiat
         ? parseFloat((value * state.pair.course).toFixed(2))
@@ -316,12 +319,21 @@ export default {
     changeBuyCoin (context: ActionContext<State, RootState>, name: string) {
       context.commit('changeAccountNumber', '')
       context.commit('changeGetCoin', name)
-      context.commit('changeSellCoinValue', context.state.sellCoinValue)
+      if (context.state.pair.isLastChangedSellCoin) {
+        context.commit('changeSellCoinValue', context.state.sellCoinValue)
+      } else {
+        context.commit('changeBuyCoinValue', context.state.buyCoinValue)
+      }
     },
     changeSellCoin (context: ActionContext<State, RootState>, id: number) {
       context.commit('changeAccountNumber', '')
       context.commit('changeGiveCoin', id)
-      context.commit('changeSellCoinValue', context.state.sellCoinValue)
+      // context.commit('changeSellCoinValue', context.state.sellCoinValue)
+      if (context.state.pair.isLastChangedSellCoin) {
+        context.commit('changeSellCoinValue', context.state.sellCoinValue)
+      } else {
+        context.commit('changeBuyCoinValue', context.state.buyCoinValue)
+      }
     },
     invertPairCoins (context: ActionContext<State, RootState>) {
       context.commit('changeAccountNumber', '')
@@ -331,7 +343,12 @@ export default {
       context.commit('changeGiveCoin', give?.id)
       const get = give?.get.find(item => item.name === giveCoin)
       context.commit('changeGetCoin', get?.name)
-      context.commit('changeBuyCoinValue', context.state.sellCoinValue)
+      // context.commit('changeBuyCoinValue', context.state.sellCoinValue)
+      if (context.state.pair.isLastChangedSellCoin) {
+        context.commit('changeSellCoinValue', context.state.sellCoinValue)
+      } else {
+        context.commit('changeBuyCoinValue', context.state.buyCoinValue)
+      }
     }
   }
 }
